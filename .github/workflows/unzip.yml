@@ -1,4 +1,4 @@
-name: Unzip oghc93.zip
+name: Unzip oghc93-panel.zip
 
 on:
   workflow_dispatch:
