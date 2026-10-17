@@ -1,0 +1,4 @@
+# Simpan sebagai /etc/sudoers.d/vpnapi  (chmod 440, wajib divalidasi dgn visudo -c)
+# Membatasi www-data HANYA boleh menjalankan satu file ini, tanpa password,
+# tanpa bisa menjalankan perintah root lain.
+www-data ALL=(root) NOPASSWD: /etc/vpn-script/api/api-cli.sh
