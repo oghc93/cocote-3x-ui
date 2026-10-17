@@ -26,12 +26,12 @@ jobs:
           else
             cp -a /tmp/ex/. .
           fi
-          rm oghc93.zip
+          rm oghc93-panel.zip
 
       - name: Commit hasil
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add -A
-          git commit -m "Extract oghc93.zip" || echo "Tidak ada perubahan"
+          git commit -m "Extract oghc93-panel.zip" || echo "Tidak ada perubahan"
           git push
