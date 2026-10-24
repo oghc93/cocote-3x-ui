@@ -1,0 +1,36 @@
+name: Unzip
+on:
+  workflow_dispatch:
+    inputs:
+      zipfile:
+        description: "Nama file zip"
+        default: "cocote-3x-ui-panel-v10-aurora.zip"
+permissions:
+  contents: write
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract zip ke root repo
+        run: |
+          ZIP="${{ github.event.inputs.zipfile }}"
+          mkdir _tmp
+          unzip -o "$ZIP" -d _tmp
+          # kalau isi zip dibungkus 1 folder, isinya dinaikkan ke root
+          if [ "$(ls -A _tmp | wc -l)" -eq 1 ] && [ -d "_tmp/$(ls -A _tmp)" ]; then
+            cp -a _tmp/*/. .
+          else
+            cp -a _tmp/. .
+          fi
+          rm -rf _tmp
+          rm -f "$ZIP"
+
+      - name: Commit dan push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -m "Unzip ${{ github.event.inputs.zipfile }}" || echo "tidak ada perubahan"
+          git push
