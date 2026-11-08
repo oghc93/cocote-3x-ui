@@ -4,7 +4,7 @@ on:
     inputs:
       zipfile:
         description: "Nama file zip"
-        default: "cocote-3x-ui-panel-v10-aurora.zip"
+        default: "cocote-3x-ui.zip"
 permissions:
   contents: write
 jobs:
