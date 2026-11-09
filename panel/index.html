@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
+<title>Cocote Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f5fa;--card:#fff;--card2:#f8f9fd;--ink:#0f172a;--soft:#475569;--mut:#94a3b8;--bd:#e2e8f0;--a:#4f46e5;--a2:#7c3aed;--aink:#fff;--ok:#15803d;--okb:#dcfce7;--warn:#a16207;--warnb:#fef3c7;--bad:#b91c1c;--badb:#fee2e2;--info:#1d4ed8;--infob:#dbeafe;--side:#fff;--sh:0 1px 2px rgba(15,23,42,.06),0 4px 14px rgba(15,23,42,.05);--r:14px}
+[data-theme=dark]{--bg:#0b1020;--card:#131a2e;--card2:#182139;--ink:#e8edfb;--soft:#a5b1d0;--mut:#6b7899;--bd:#243050;--a:#818cf8;--a2:#a78bfa;--aink:#0b1020;--ok:#4ade80;--okb:rgba(74,222,128,.14);--warn:#fcd34d;--warnb:rgba(252,211,77,.13);--bad:#fb7185;--badb:rgba(251,113,133,.14);--info:#93c5fd;--infob:rgba(147,197,253,.14);--side:#0e1428;--sh:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25)}
+[data-theme=aurora]{--bg:#070b1a;--card:rgba(255,255,255,.07);--card2:rgba(255,255,255,.05);--ink:#eaf0ff;--soft:#b3c0e3;--mut:#7e8db4;--bd:rgba(255,255,255,.14);--a:#5eead4;--a2:#a78bfa;--aink:#06122b;--ok:#86efac;--okb:rgba(74,222,128,.14);--warn:#fcd34d;--warnb:rgba(252,211,77,.12);--bad:#fda4af;--badb:rgba(251,113,133,.14);--info:#93c5fd;--infob:rgba(147,197,253,.14);--side:rgba(10,15,35,.7);--sh:none}
+[data-theme=glass]{--bg:#dbe4fb;--card:rgba(255,255,255,.55);--card2:rgba(255,255,255,.42);--ink:#0f172a;--soft:#334155;--mut:#64748b;--bd:rgba(71,85,105,.2);--a:#4f46e5;--a2:#db2777;--aink:#fff;--ok:#15803d;--okb:rgba(34,197,94,.2);--warn:#a16207;--warnb:rgba(250,204,21,.28);--bad:#b91c1c;--badb:rgba(239,68,68,.18);--info:#1d4ed8;--infob:rgba(59,130,246,.2);--side:rgba(255,255,255,.5);--sh:0 8px 32px rgba(49,46,129,.14)}
+[data-theme=glass] body::before{content:"";position:fixed;inset:-10%;z-index:-1;pointer-events:none;background:radial-gradient(38% 32% at 12% 8%,rgba(99,102,241,.55),transparent 70%),radial-gradient(36% 30% at 88% 12%,rgba(236,72,153,.42),transparent 70%),radial-gradient(44% 34% at 50% 100%,rgba(45,212,191,.45),transparent 70%),radial-gradient(30% 26% at 90% 80%,rgba(251,191,36,.35),transparent 70%)}
+[data-theme=glass] .card,[data-theme=glass] .side,[data-theme=glass] .top,[data-theme=glass] .bnav{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+[data-theme=glass] .card,[data-theme=glass] .tw,[data-theme=glass] .side,[data-theme=glass] .bnav{border-color:rgba(255,255,255,.8)}
+[data-theme=glass] .card,[data-theme=glass] .tw{box-shadow:var(--sh),inset 0 1px 0 rgba(255,255,255,.8)}
+[data-theme=glass] .btn,[data-theme=glass] input,[data-theme=glass] select,[data-theme=glass] .chip{border-color:rgba(255,255,255,.85)}
+[data-theme=glass] .btn.p{border-color:transparent}
+[data-theme=glass] .chip.on{border-color:var(--a)}
+[data-theme=glass] .modal{background:#fff}
+[data-theme=glass] .top{background:rgba(255,255,255,.4)}
+[data-theme=glass] tbody tr:hover td{background:rgba(255,255,255,.45)}
+[data-theme=aurorag]{--bg:#060914;--card:rgba(255,255,255,.075);--card2:rgba(255,255,255,.06);--ink:#f1f5ff;--soft:#c3cdeb;--mut:#8896bf;--bd:rgba(255,255,255,.17);--a:#67e8f9;--a2:#c084fc;--aink:#06122b;--ok:#86efac;--okb:rgba(74,222,128,.15);--warn:#fcd34d;--warnb:rgba(252,211,77,.14);--bad:#fda4af;--badb:rgba(251,113,133,.16);--info:#93c5fd;--infob:rgba(147,197,253,.16);--side:rgba(10,14,36,.55);--sh:0 12px 40px rgba(0,0,0,.35)}
+[data-theme=aurorag] body::before{content:"";position:fixed;inset:-15%;z-index:-1;pointer-events:none;background:radial-gradient(34% 30% at 14% 10%,rgba(45,212,191,.55),transparent 70%),radial-gradient(34% 30% at 86% 8%,rgba(139,92,246,.6),transparent 70%),radial-gradient(30% 28% at 78% 62%,rgba(236,72,153,.32),transparent 70%),radial-gradient(40% 30% at 30% 100%,rgba(56,189,248,.42),transparent 70%)}
+[data-theme=aurorag] .card,[data-theme=aurorag] .side,[data-theme=aurorag] .top,[data-theme=aurorag] .bnav{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+[data-theme=aurorag] .card,[data-theme=aurorag] .tw{background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.04));border-color:rgba(255,255,255,.2);box-shadow:var(--sh),inset 0 1px 0 rgba(255,255,255,.22),inset 0 0 0 1px rgba(255,255,255,.03)}
+[data-theme=aurorag] .btn,[data-theme=aurorag] input,[data-theme=aurorag] select,[data-theme=aurorag] textarea,[data-theme=aurorag] .chip{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.2)}
+[data-theme=aurorag] .btn.p{background:linear-gradient(135deg,#5eead4,#a78bfa 60%,#f0abfc);border-color:transparent;box-shadow:0 6px 22px rgba(167,139,250,.35)}
+[data-theme=aurorag] .chip.on{background:linear-gradient(135deg,#5eead4,#a78bfa);color:#06122b;border-color:transparent}
+[data-theme=aurorag] .nav.on{box-shadow:inset 0 0 0 1px rgba(103,232,249,.35)}
+[data-theme=aurorag] .logo i{box-shadow:0 0 22px rgba(103,232,249,.5)}
+[data-theme=aurorag] .modal{background:rgba(13,18,44,.92);border-color:rgba(255,255,255,.2)}
+[data-theme=aurorag] .top{background:rgba(8,12,30,.45)}
+[data-theme=aurorag] tbody tr:hover td{background:rgba(255,255,255,.05)}
+[data-theme=aurorag] .bar i{background:linear-gradient(90deg,#5eead4,#a78bfa,#f0abfc)}
+[data-theme=aurorag] .bulk{background:rgba(241,245,255,.95)}
+html[data-perf=lite] *,html[data-perf=lite] *::before{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;animation:none!important;transition:none!important}
+html[data-perf=lite] .card,html[data-perf=lite] .tw{box-shadow:none!important}
+html[data-perf=lite][data-theme=aurorag] .card,html[data-perf=lite][data-theme=aurorag] .tw{background:rgba(24,30,64,.92)}
+html[data-perf=lite][data-theme=aurora] .card{background:rgba(24,30,64,.92)}
+html[data-perf=lite][data-theme=glass] .card,html[data-perf=lite][data-theme=glass] .tw{background:rgba(255,255,255,.88)}
+html[data-perf=lite][data-theme=glass] .side,html[data-perf=lite][data-theme=glass] .bnav{background:rgba(255,255,255,.95)}
+html[data-perf=lite][data-theme=aurora] .side,html[data-perf=lite][data-theme=aurora] .bnav,html[data-perf=lite][data-theme=aurorag] .side,html[data-perf=lite][data-theme=aurorag] .bnav{background:#0c1130}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:1.45;-webkit-text-size-adjust:100%;min-height:100vh}
+[data-theme=aurora] body::before{content:"";position:fixed;inset:-10%;z-index:-1;pointer-events:none;background:radial-gradient(40% 30% at 15% 5%,rgba(20,184,166,.4),transparent 70%),radial-gradient(40% 30% at 85% 5%,rgba(124,58,237,.42),transparent 70%),radial-gradient(50% 30% at 55% 100%,rgba(37,99,235,.25),transparent 70%)}
+[data-theme=aurora] .card,[data-theme=aurora] .side,[data-theme=aurora] .top,[data-theme=aurora] .bnav{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.hide{display:none!important}
+.mono{font-family:'JetBrains Mono',monospace;font-size:12.5px}
+.muted{color:var(--soft)}.faint{color:var(--mut)}
+svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+/* layout */
+.app{display:grid;grid-template-columns:232px 1fr;min-height:100vh}
+.side{position:sticky;top:0;height:100vh;background:var(--side);border-right:1px solid var(--bd);padding:16px 12px;display:flex;flex-direction:column;gap:4px;overflow:auto}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;padding:4px 8px 14px}
+.logo i{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--a),var(--a2));display:grid;place-items:center;color:var(--aink)}
+.nav{display:flex;align-items:center;gap:12px;min-height:42px;padding:0 12px;border-radius:10px;border:0;background:none;color:var(--soft);font-weight:600;font-size:14px;width:100%;text-align:left}
+.nav:hover{background:var(--card2);color:var(--ink)}
+.nav.on{background:linear-gradient(135deg,color-mix(in srgb,var(--a) 16%,transparent),color-mix(in srgb,var(--a2) 14%,transparent));color:var(--a)}
+.nav .cnt{margin-left:auto;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--infob);color:var(--info)}
+.side .sp{flex:1}
+.main{min-width:0}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:10px 20px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--bd)}
+.top h1{font-size:18px;margin:0;font-weight:800;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wrap{padding:20px;max-width:1280px;margin:0 auto}
+.bnav{display:none}
+/* controls */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:0 14px;border-radius:10px;border:1px solid var(--bd);background:var(--card);font-weight:600;font-size:13.5px;white-space:nowrap}
+.btn:hover{border-color:var(--a)}
+.btn.p{background:linear-gradient(135deg,var(--a),var(--a2));border-color:transparent;color:var(--aink);font-weight:700}
+.btn.d{color:var(--bad)}.btn.d:hover{border-color:var(--bad)}
+.btn.s{min-height:32px;padding:0 10px;font-size:12.5px;border-radius:8px}
+.btn .bt{display:none}
+td.ac .btn.s:not([data-a=link]){padding:0 9px}
+td.ac{white-space:nowrap}
+.btn.ic{width:38px;padding:0}
+a.btn{text-decoration:none;color:var(--ink)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+input,select,textarea{width:100%;min-height:40px;padding:0 12px;border-radius:10px;border:1px solid var(--bd);background:var(--card);outline:none}
+textarea{padding:10px 12px;min-height:90px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--a);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 20%,transparent)}
+select option{color:#111;background:#fff}
+label.l{display:block;font-size:12.5px;font-weight:600;color:var(--soft);margin:12px 0 5px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);box-shadow:var(--sh);padding:16px}
+.card h3{margin:0 0 12px;font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:8px}
+.card h3 .r{margin-left:auto;font-weight:500;font-size:12px;color:var(--mut)}
+.grid{display:grid;gap:14px}
+.g21{align-items:start}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}.g21{grid-template-columns:2fr 1fr}
+.kpi{display:flex;gap:12px;align-items:center}
+.kpi .ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:none}
+.kpi .v{font-size:24px;font-weight:800;line-height:1.1}
+.kpi .t{font-size:12.5px;color:var(--soft);font-weight:600}
+.kpi .n{font-size:12px;color:var(--mut)}
+.bar{height:7px;border-radius:9px;background:var(--card2);border:1px solid var(--bd);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--a),var(--a2))}
+.bar.w i{background:var(--warn)}.bar.b i{background:var(--bad)}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:99px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.b-ok{background:var(--okb);color:var(--ok)}.b-warn{background:var(--warnb);color:var(--warn)}.b-bad{background:var(--badb);color:var(--bad)}.b-info{background:var(--infob);color:var(--info)}.b-n{background:var(--card2);color:var(--soft);border:1px solid var(--bd)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--mut)}.dot.ok{background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.2)}.dot.bad{background:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,.2)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row.sb{justify-content:space-between}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.tools .grow{flex:1;min-width:160px}
+.tools select{width:auto;min-width:120px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{min-height:32px;padding:0 12px;border-radius:99px;border:1px solid var(--bd);background:var(--card);font-weight:600;font-size:12.5px;color:var(--soft)}
+.chip.on{background:var(--a);color:var(--aink);border-color:var(--a)}
+/* table */
+.tw{overflow-x:auto;border:1px solid var(--bd);border-radius:var(--r);background:var(--card)}
+table{width:100%;border-collapse:collapse}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut);text-align:left;padding:10px 12px;background:var(--card2);border-bottom:1px solid var(--bd);white-space:nowrap;cursor:default;user-select:none}
+th.sort{cursor:pointer}th.sort:hover{color:var(--ink)}
+td{padding:10px 12px;border-bottom:1px solid var(--bd);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--card2)}
+td.ac{white-space:nowrap;text-align:right}
+td input[type=checkbox],th input[type=checkbox]{width:17px;min-height:17px;accent-color:var(--a)}
+.empty{padding:34px 16px;text-align:center;color:var(--mut)}
+.bulk{position:sticky;bottom:78px;z-index:15;margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 14px;border-radius:14px;background:var(--ink);color:var(--bg)}
+.bulk .btn{background:transparent;color:inherit;border-color:rgba(255,255,255,.3)}
+/* overlay */
+.ov{position:fixed;inset:0;z-index:60;background:rgba(8,12,28,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:16px}
+.modal{width:100%;max-width:520px;max-height:92vh;overflow:auto;background:var(--card);background-clip:padding-box;border:1px solid var(--bd);border-radius:18px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+[data-theme=aurora] .modal{background:#0d1530}
+.modal h2{margin:0 0 4px;font-size:17px}
+.modal .acts{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+pre{white-space:pre-wrap;word-break:break-all;background:var(--card2);border:1px solid var(--bd);border-radius:10px;padding:12px;font-size:12px;margin:10px 0 0;max-height:260px;overflow:auto;font-family:'JetBrains Mono',monospace}
+.lk{display:flex;gap:8px;align-items:center;margin-top:8px}
+.lk code{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:var(--card2);border:1px solid var(--bd);border-radius:8px;padding:7px 10px;font-size:12px;font-family:'JetBrains Mono',monospace}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);z-index:90;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;max-width:92vw;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.3)}
+.toast.err{background:var(--bad);color:#fff}
+.srv .h{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.srv .h b{font-size:15px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:12.5px}
+.kv span:nth-child(odd){color:var(--mut)}
+.svc{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--card2);border:1px solid var(--bd)}
+.mini{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.mini small{display:block;color:var(--mut);font-size:11px;font-weight:600}
+.mini b{font-size:12.5px}
+.chart{width:100%;height:170px;display:block}
+.chart text{fill:var(--mut);font-size:10px}
+.sec{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--mut);margin:18px 0 8px}
+.login{max-width:380px;margin:14vh auto 0;padding:16px}
+.login .card{padding:26px}
+.note{font-size:12.5px;color:var(--soft);background:var(--card2);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;margin-top:10px}
+.spin{width:18px;height:18px;border-radius:50%;border:2px solid var(--bd);border-top-color:var(--a);animation:sp .7s linear infinite;display:inline-block;vertical-align:middle}
+@keyframes sp{to{transform:rotate(360deg)}}
+.sk{height:14px;border-radius:7px;background:linear-gradient(90deg,var(--card2),var(--bd),var(--card2));background-size:200% 100%;animation:sk 1.2s infinite}
+@keyframes sk{to{background-position:-200% 0}}
+
+/* ---- pro polish ---- */
+.upd{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--mut);margin-right:auto;white-space:nowrap}
+.upd i{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 22%,transparent)}
+.upd.old i{background:var(--warn);box-shadow:0 0 0 3px color-mix(in srgb,var(--warn) 22%,transparent)}
+.top h1{margin-right:0}
+#bPal{gap:8px;color:var(--mut);font-weight:500}#bPal .pi{display:inline-flex}
+#bPal kbd,.pal kbd{font:600 10.5px/1 ui-monospace,monospace;padding:3px 6px;border-radius:6px;border:1px solid var(--bd);color:var(--mut);background:var(--card2)}
+#sc{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{transition:transform .18s,border-color .18s}
+.grid>.card:hover{border-color:color-mix(in srgb,var(--a) 38%,var(--bd))}
+.kpi .v{font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.tw thead th{position:sticky;top:0;z-index:2;background:var(--card2);backdrop-filter:none}
+.tw tbody tr{transition:background .12s}
+.tw tbody tr:hover td{background:color-mix(in srgb,var(--a) 6%,transparent)}
+.view-in{animation:vin .22s ease both}@keyframes vin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+html[data-perf=lite] .view-in{animation:none}
+:focus-visible{outline:2px solid var(--a);outline-offset:2px}
+.pal{width:min(560px,94vw);padding:0;overflow:hidden}
+.pal input{width:100%;border:0;border-bottom:1px solid var(--bd);border-radius:0;min-height:54px;padding:0 18px;font-size:15.5px;background:transparent;outline:0}
+.pal .pl{max-height:min(52vh,420px);overflow:auto;padding:8px}
+.pal .pg{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);padding:10px 10px 4px}
+.pal .pr{display:flex;align-items:center;gap:12px;width:100%;min-height:42px;padding:0 10px;border:0;border-radius:10px;background:none;color:var(--ink);font-size:14px;text-align:left;cursor:pointer}
+.pal .pr.on,.pal .pr:hover{background:color-mix(in srgb,var(--a) 14%,transparent)}
+.pal .pr small{margin-left:auto;color:var(--mut);font-size:12px}
+.pal .pe{padding:26px;text-align:center;color:var(--mut)}
+.pal .pf{display:flex;gap:14px;padding:9px 16px;border-top:1px solid var(--bd);font-size:11.5px;color:var(--mut)}
+@media(max-width:820px){#bPal .pt,#bPal kbd{display:none}#bPal{padding:0;width:42px;justify-content:center}.upd span{display:none}}
+@media(max-width:1000px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1fr}}
+@media(max-width:820px){
+ .btn .bt{display:inline}
+ .top h1{font-size:16px;min-width:0}#selSrv{max-width:120px!important}
+ #bTrial .tl{display:none}#bTrial{width:38px;padding:0}
+ .app{grid-template-columns:1fr}
+ .side{position:fixed;left:0;top:0;bottom:0;width:260px;z-index:70;transform:translateX(-105%);transition:transform .2s;box-shadow:0 0 40px rgba(0,0,0,.4)}
+ .side.open{transform:none}
+ .bnav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--side);border-top:1px solid var(--bd);padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+ .bnav button{display:flex;flex-direction:column;align-items:center;gap:2px;min-height:50px;border:0;background:none;color:var(--mut);font-size:10.5px;font-weight:700;border-radius:10px}
+ .bnav button.on{color:var(--a)}
+ .wrap{padding:14px 14px 96px}
+ .top{padding:10px 14px}
+ .g3,.g2{grid-template-columns:1fr}
+ .two{grid-template-columns:1fr}
+ .bulk{bottom:70px}
+ /* tabel jadi kartu */
+ table.rs,table.rs tbody,table.rs tr,table.rs td{display:block}
+ table.rs thead{display:none}
+ .tw:has(table.rs){border:0;background:none}
+ table.rs tr{background:var(--card);border:1px solid var(--bd);border-radius:12px;margin-bottom:10px;padding:8px 12px;position:relative}
+ table.rs td{border:0;padding:5px 0;display:flex;justify-content:space-between;gap:12px;align-items:center;text-align:right}
+ table.rs td[data-l]::before{content:attr(data-l);color:var(--mut);font-size:11.5px;font-weight:600;text-align:left}
+ table.rs td.ck{justify-content:flex-start;gap:10px;padding-bottom:6px;border-bottom:1px solid var(--bd);margin-bottom:4px}
+ table.rs td.ck::before{content:'Pilih'}
+ table.rs td.ac{justify-content:flex-end;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--bd);margin-top:4px}
+ table.rs tbody tr:hover td{background:none}
+}
+[data-e],[data-d],#bAdd{display:none!important}</style>
+</head>
+<body>
+
+<div id="login" class="login hide">
+  <div class="card">
+    <div class="logo" style="padding:0 0 14px"><i><svg class="i" viewBox="0 0 24 24"><path d="M3 17c3-8 6-8 9 0s6 8 9 0"/></svg></i>Cocote Panel</div>
+    <form id="lf">
+      <label class="l" for="pw" style="margin-top:0">API key VPS</label>
+      <input id="pw" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+      <button class="btn p" style="width:100%;margin-top:14px;min-height:44px" type="submit">Masuk</button>
+      <div id="lerr" class="note hide" style="color:var(--bad)"></div>
+    </form>
+  </div>
+</div>
+
+<div id="app" class="app hide">
+  <aside class="side" id="side">
+    <div class="logo"><i><svg class="i" viewBox="0 0 24 24"><path d="M3 17c3-8 6-8 9 0s6 8 9 0"/></svg></i>Cocote Panel</div>
+    <div id="nav"></div>
+    <div class="sp"></div>
+    <button class="nav" id="nTheme"></button>
+    <button class="nav" id="nOut"></button>
+  </aside>
+  <div class="main">
+    <div class="top">
+      <button class="btn ic hide" id="bMenu" aria-label="Menu"></button>
+      <h1 id="ttl">Dashboard</h1>
+      <span class="upd" id="upd" title="Terakhir diperbarui"><i></i><span>-</span></span>
+      <button class="btn" id="bPal" aria-label="Cari (Ctrl+K)"><span class="pi"></span><span class="pt">Cari…</span><kbd>Ctrl K</kbd></button>
+      <button class="btn p" id="bTrial" aria-label="Trial cepat"></button>
+      <select id="selSrv" style="width:auto;max-width:190px" aria-label="Server"></select>
+      <button class="btn ic" id="bRef" aria-label="Muat ulang"></button>
+    </div>
+    <div class="wrap" id="view"></div>
+  </div>
+</div>
+<nav class="bnav hide" id="bnav"></nav>
+<div id="ovs"></div>
+<div id="toast" class="toast hide"></div>
+
+<script>
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+var IC={
+ dash:'<rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/>',
+ user:'<circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-7 7-7s7 3 7 7M17 11a3 3 0 1 0 0-6M22 21c0-3-2-5-5-6"/>',
+ wifi:'<path d="M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/>',
+ srv:'<rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/>',
+ tool:'<path d="M14.7 6.3a4 4 0 0 0-5 5L3 18l3 3 6.7-6.7a4 4 0 0 0 5-5l-2.5 2.5-2.4-.6-.6-2.4z"/>',
+ set:'<circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2-1.2L14.2 3h-4l-.4 2.7a7 7 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5a7 7 0 0 0 0 2.4l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2 1.2l.4 2.7h4l.4-2.7a7 7 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/>',
+ menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',
+ search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+ ref:'<path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ theme:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+ out:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>',
+ link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+ cal:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>',
+ edit:'<path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+ del:'<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/>',
+ kick:'<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>',
+ copy:'<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>',
+ dl:'<path d="M12 3v12M7 10l5 5 5-5M4 21h16"/>',
+ shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>',
+ bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ x:'<path d="M18 6L6 18M6 6l12 12"/>',
+ chk:'<path d="M20 6L9 17l-5-5"/>'
+};
+var ic=function(n){return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+(IC[n]||'')+'</svg>'};
+
+/* ---------- util ---------- */
+var tmr=null;
+function toast(m,err){var t=$('#toast');t.textContent=m;t.className='toast'+(err?' err':'');clearTimeout(tmr);tmr=setTimeout(function(){t.className='toast hide'},err?5000:2600)}
+var KEYN='vpnpanel-api-key',API='/api/',LOCAL='local';
+function apiKey(){try{return localStorage.getItem(KEYN)||''}catch(e){return ''}}
+function apiFetch(qs,opt){opt=opt||{};var h={'X-Api-Key':apiKey()},body=opt.body;
+ if(body&&typeof body!=='string')body=JSON.stringify(body);if(body)h['Content-Type']='application/json';
+ return fetch(API+'?'+qs,{method:opt.method||'GET',body:body,headers:h}).then(function(r){return r.text().then(function(t){var d;try{d=JSON.parse(t)}catch(e){d={ok:false,error:'Respons tidak valid (HTTP '+r.status+')'}}
+  if((r.status===401||r.status===403)&&!opt.noLogin){showLogin();throw new Error('API key ditolak, masukkan lagi')}
+  if(!r.ok&&d&&!Array.isArray(d)&&d.ok!==false&&!d.error)d={ok:false,error:'HTTP '+r.status};
+  return d})})}
+function jf(url,opt){opt=opt||{};var NO=function(m){return Promise.resolve({ok:false,error:m||'Tidak tersedia di panel VPS'})};
+ if(url==='/auth/me')return apiFetch('action=summary',{noLogin:1}).then(function(d){return {ok:!bad(d)}},function(){return {ok:false}});
+ if(url==='/auth/login'){var k=String((opt.body&&opt.body.password)||'').trim();try{localStorage.setItem(KEYN,k)}catch(e){}
+  return apiFetch('action=summary',{noLogin:1}).then(function(d){if(bad(d)){try{localStorage.removeItem(KEYN)}catch(e){}return {ok:false,error:'API key salah atau server tidak merespons'}}return {ok:true}},function(e){return {ok:false,error:e.message}})}
+ if(url==='/auth/logout'){try{localStorage.removeItem(KEYN)}catch(e){}return Promise.resolve({ok:true})}
+ if(url==='/servers'&&!opt.method)return Promise.resolve({servers:[{id:LOCAL,name:location.hostname,base:location.origin+'/api'}]});
+ var m=url.match(/^\/s\/local\?([\s\S]*)$/);if(m)return apiFetch(m[1],opt);
+ if(/^\/ping\/local/.test(url)){var t0=Date.now();return apiFetch('action=summary',{noLogin:1}).then(function(d){return bad(d)?{ok:false,error:(d&&d.error)||'gagal'}:{ok:true,ms:Date.now()-t0}},function(e){return {ok:false,error:e.message}})}
+ if(/^\/tg\//.test(url))return Promise.resolve({ok:true,connected:false,paired:false});
+ return NO()}
+function vps(id,qs,method,body){return jf('/s/'+id+'?'+qs,{method:method||'GET',body:body})}
+function bad(d){return !d||(!Array.isArray(d)&&(d.ok===false||d.error))}
+function errMsg(d){return (d&&d.error)||'Gagal'}
+function bytes(n){n=Number(n)||0;var u=['B','KB','MB','GB','TB'],i=0;while(n>=1024&&i<4){n/=1024;i++}return (i?n.toFixed(n>=100?0:1):n)+' '+u[i]}
+function mb(n){n=Number(n)||0;return n>=1024?(n/1024).toFixed(n>=10240?0:1)+' GB':n+' MB'}
+function ago(t){var s=Math.floor(Date.now()/1000-t);if(s<60)return s+' dtk lalu';if(s<3600)return Math.floor(s/60)+' mnt lalu';if(s<86400)return Math.floor(s/3600)+' jam lalu';return Math.floor(s/86400)+' hari lalu'}
+function copy(t){var ok=function(){toast('Disalin')};
+ if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(ok,function(){fb()});else fb();
+ function fb(){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){toast('Gagal menyalin',1)}a.remove()}}
+function save(name,text,type){var b=new Blob([text],{type:type||'text/plain'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)}
+function modal(html,wide){var o=document.createElement('div');o.className='ov';o.innerHTML='<div class="modal" role="dialog" aria-modal="true" style="'+(wide?'max-width:680px':'')+'">'+html+'</div>';
+ o.addEventListener('mousedown',function(e){if(e.target===o)close()});
+ function close(){o.remove()}
+ $('#ovs').appendChild(o);o.close=close;
+ var f=o.querySelector('input:not([type=checkbox]),select');if(f&&!/Mobi|Android/i.test(navigator.userAgent))f.focus();
+ return o}
+function ask(msg,okLabel,danger){return new Promise(function(res){var o=modal('<h2>Konfirmasi</h2><p class="muted" style="margin:8px 0 0;white-space:pre-line">'+esc(msg)+'</p><div class="acts"><button class="btn" data-n>Batal</button><button class="btn '+(danger?'d':'p')+'" data-y>'+esc(okLabel||'Lanjut')+'</button></div>');
+ o.querySelector('[data-n]').onclick=function(){o.close();res(false)};o.querySelector('[data-y]').onclick=function(){o.close();res(true)}})}
+function busy(btn,on,txt){if(!btn)return;if(on){btn._h=btn.innerHTML;btn.disabled=true;btn.innerHTML='<span class="spin"></span> '+(txt||'')}else{btn.disabled=false;btn.innerHTML=btn._h}}
+function par(items,fn,lim){lim=lim||4;var out=new Array(items.length),i=0;
+ return Promise.all(Array.from({length:Math.min(lim,items.length)},function(){return (function nx(){if(i>=items.length)return Promise.resolve();var k=i++;return fn(items[k],k).then(function(r){out[k]=r},function(e){out[k]={ok:false,error:e.message}}).then(nx)})()})).then(function(){return out})}
+
+/* ---------- theme ---------- */
+var THEMES=[['light','Terang'],['dark','Gelap'],['aurora','Aurora'],['glass','Glass'],['aurorag','Aurora Glass']];
+function getTheme(){try{return localStorage.getItem('th')||'light'}catch(e){return 'light'}}
+function setTheme(t){document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('th',t)}catch(e){}
+ var m=document.querySelector('meta[name=theme-color]');if(m)m.content=t==='light'?'#4f46e5':(t==='dark'?'#0b1020':(t==='glass'?'#dbe4fb':(t==='aurorag'?'#060914':'#070b1a')));
+ var n=$('#nTheme');if(n)n.innerHTML=ic('theme')+'Tema: '+(THEMES.filter(function(x){return x[0]===t})[0]||[0,'?'])[1]}
+setTheme(getTheme());
+function perfDefault(){try{var m=navigator.deviceMemory,c=navigator.hardwareConcurrency;return (m&&m<=4)||(c&&c<=4)}catch(e){return false}}
+function getPerf(){try{var v=localStorage.getItem('perf');if(v==='1')return true;if(v==='0')return false}catch(e){}return perfDefault()}
+function setPerf(on,keep){if(on)document.documentElement.setAttribute('data-perf','lite');else document.documentElement.removeAttribute('data-perf');if(!keep){try{localStorage.setItem('perf',on?'1':'0')}catch(e){}}}
+setPerf(getPerf(),true);
+
+/* ---------- state ---------- */
+var S={servers:[],sel:'all',page:'dash',D:{},sort:{k:'exp',d:1},flt:{q:'',proto:'',st:''},picked:{},lim:60,auto:false,autoT:null};
+try{S.sel=localStorage.getItem('sel')||'all'}catch(e){}
+var PAGES=[['dash','Dashboard','dash'],['acc','Akun','user'],['onl','Online','wifi'],['srv','Server','srv'],['tool','Alat','tool'],['set','Pengaturan','set']];
+var PROTO={vmess:'VMess',vless:'VLess',trojan:'Trojan',ss:'Shadowsocks',sshws:'SSH-WS'};
+function srvList(){return S.sel==='all'?S.servers:S.servers.filter(function(s){return s.id===S.sel})}
+function srvName(id){var s=S.servers.filter(function(x){return x.id===id})[0];return s?s.name:id}
+function dd(id){return S.D[id]||(S.D[id]={})}
+
+/* ---------- auth ---------- */
+function showLogin(){$('#app').classList.add('hide');$('#bnav').classList.add('hide');$('#login').classList.remove('hide');stopAuto()}
+function showApp(){$('#login').classList.add('hide');$('#app').classList.remove('hide');$('#bnav').classList.remove('hide')}
+$('#lf').addEventListener('submit',function(e){e.preventDefault();var b=e.target.querySelector('button'),er=$('#lerr');er.classList.add('hide');busy(b,1,'Masuk');
+ jf('/auth/login',{method:'POST',body:{password:$('#pw').value}}).then(function(d){busy(b,0);if(d.ok){$('#pw').value='';boot()}else{er.textContent=d.error||'Gagal';er.classList.remove('hide')}},function(){busy(b,0)})});
+$('#nOut').innerHTML=ic('out')+'Keluar';
+$('#nOut').onclick=function(){jf('/auth/logout',{method:'POST'}).then(showLogin)};
+$('#nTheme').onclick=function(){var i=THEMES.map(function(x){return x[0]}).indexOf(getTheme());setTheme(THEMES[(i+1)%THEMES.length][0])};
+$('#bTrial').innerHTML=ic('bolt')+'<span class="tl">Trial</span>';$('#bTrial').onclick=function(){trialDlg()};
+$('#bMenu').innerHTML=ic('menu');$('#bRef').innerHTML=ic('ref');
+$('#bMenu').onclick=function(){$('#side').classList.toggle('open')};
+$('#bRef').onclick=function(){S.D={};go(S.page,true)};
+document.addEventListener('click',function(e){if(window.innerWidth<=820&&!e.target.closest('#side')&&!e.target.closest('#bMenu'))$('#side').classList.remove('open')});
+function mobile(){var b=$('#bMenu');if(window.innerWidth<=820){b.classList.remove('hide')}else b.classList.add('hide')}
+window.addEventListener('resize',mobile);
+
+/* ---------- nav ---------- */
+function buildNav(){
+ $('#nav').innerHTML=PAGES.map(function(p){return '<button class="nav'+(S.page===p[0]?' on':'')+'" data-p="'+p[0]+'">'+ic(p[2])+p[1]+(p[0]==='onl'?'<span class="cnt hide" id="cntOnl"></span>':'')+'</button>'}).join('');
+ var bn=[['dash','Home','dash'],['acc','Akun','user'],['onl','Online','wifi'],['srv','Server','srv'],['menu','Menu','menu']];
+ $('#bnav').innerHTML=bn.map(function(p){return '<button data-p="'+p[0]+'" class="'+(S.page===p[0]?'on':'')+'">'+ic(p[2])+p[1]+'</button>'}).join('');
+ $('#bnav').classList.toggle('hide',$('#app').classList.contains('hide'))}
+document.addEventListener('click',function(e){var b=e.target.closest('[data-p]');if(!b)return;var p=b.getAttribute('data-p');if(p==='menu'){$('#side').classList.add('open');e.stopPropagation();return}
+ $('#side').classList.remove('open');go(p)});
+function srvSelect(){var h='<option value="all">Semua server</option>'+S.servers.map(function(s){return '<option value="'+esc(s.id)+'">'+esc(s.name)+'</option>'}).join('');
+ var el=$('#selSrv');el.innerHTML=h;if(S.sel!=='all'&&!S.servers.some(function(s){return s.id===S.sel}))S.sel='all';el.value=S.sel;el.classList.toggle('hide',S.servers.length<2)}
+$('#selSrv').onchange=function(){S.sel=this.value;try{localStorage.setItem('sel',S.sel)}catch(e){};S.picked={};go(S.page)};
+
+function stopAuto(){clearInterval(S.autoT);S.autoT=null}
+function go(p,force){S.page=p;stopAuto();buildNav();var t=PAGES.filter(function(x){return x[0]===p})[0];$('#ttl').textContent=t?t[1]:'';
+ var vv=$('#view');vv.classList.remove('view-in');void vv.offsetWidth;vv.classList.add('view-in');window.scrollTo(0,0);({dash:rDash,acc:rAcc,onl:rOnl,srv:rSrv,tool:rTool,set:rSet})[p](force)}
+
+/* ---------- data loaders ---------- */
+function load(ids,parts,force){
+ var jobs=[];ids.forEach(function(id){parts.forEach(function(p){var d=dd(id);if(!force&&d[p]&&Date.now()-(d[p+'T']||0)<45000)return;jobs.push([id,p])})});
+ var qs={sum:'action=summary',acc:'action=accounts',onl:'action=online',his:'action=history',act:'action=activity',sec:'action=security'};
+ var changed=false;
+ return par(jobs,function(j){var t=Date.now();return vps(j[0],qs[j[1]]).then(function(r){var d=dd(j[0]);
+  d[j[1]+'E']=bad(r)?errMsg(r):null;if(!bad(r)){var o=d[j[1]];if(!o||(j[1]!=='sum'&&JSON.stringify(o)!==JSON.stringify(r))||(j[1]==='sum'&&JSON.stringify(o.counts)+o.cpu_pct+o.mem_pct!==JSON.stringify(r.counts)+r.cpu_pct+r.mem_pct))changed=true;d[j[1]]=r;d[j[1]+'T']=Date.now();if(j[1]==='sum')d.ms=Date.now()-t}else changed=true;
+  return r})},5).then(function(){markUpd();return changed})}
+function skeleton(n){var h='';for(var i=0;i<n;i++)h+='<div class="card"><div class="sk" style="width:40%"></div><div class="sk" style="width:70%;margin-top:12px"></div><div class="sk" style="width:55%;margin-top:12px"></div></div>';return h}
+function noServer(){return '<div class="card empty"><div style="font-size:15px;font-weight:700;color:var(--ink)">Belum ada server</div><p>Tambahkan VPS pertama kamu untuk mulai mengelola akun.</p><button class="btn p" id="goAdd">'+ic('plus')+' Tambah server</button></div>'}
+function afterNoServer(){var b=$('#goAdd');if(b)b.onclick=function(){go('srv');setTimeout(addSrv,50)}}
+
+/* ---------- account helpers ---------- */
+function daysLeft(exp){if(!exp)return null;var t=Date.parse(String(exp).trim().replace(' ','T'));if(isNaN(t))return null;
+ if(/^\d{4}-\d{2}-\d{2}$/.test(String(exp).trim()))t+=86399000;return Math.ceil((t-Date.now())/86400000)}
+function accStat(a){if(a.suspended)return ['Ditangguhkan','bad','susp'];
+ var d=daysLeft(a.exp);if(d!==null&&d<0)return ['Expired','bad','exp'];
+ if(a.quota_mb>0&&a.used_mb>=a.quota_mb)return ['Kuota habis','bad','quota'];
+ if(a.penalty_until)return ['Penalti','warn','pen'];
+ if(d!==null&&d<=3)return ['Segera habis','warn','soon'];return ['Aktif','ok','ok']}
+function allAcc(){var out=[];srvList().forEach(function(s){((dd(s.id).acc)||[]).forEach(function(a){var c=Object.assign({},a);c.sid=s.id;c.sname=s.name;out.push(c)})});return out}
+function key(a){return a.sid+'|'+a.proto+'|'+a.username}
+
+/* ---------- DASHBOARD ---------- */
+function rDash(force){
+ var v=$('#view');if(!S.servers.length){v.innerHTML=noServer();afterNoServer();return}
+ var ids=srvList().map(function(s){return s.id}),had=!force&&ids.every(function(i){return dd(i).sum});
+ v.innerHTML='<div class="grid g4" id="kp">'+skeleton(4)+'</div><div class="sec">Server</div><div class="grid g3" id="sc">'+skeleton(S.servers.length>3?3:S.servers.length)+'</div>';
+ if(had)drawDash();
+ load(ids,['sum','acc','his','act'],force).then(function(ch){if(S.page!=='dash')return;if(!had||ch){if(had){$('#view').innerHTML='<div class="grid g4" id="kp"></div><div class="sec">Server</div><div class="grid g3" id="sc"></div>'}drawDash()}})}
+function drawDash(){
+ var L=srvList(),acc=allAcc(),tot=acc.length,soon=0,exp=0,susp=0,onl=0,up=0;
+ acc.forEach(function(a){var s=accStat(a)[2];if(s==='soon')soon++;if(s==='exp')exp++;if(s==='susp'||s==='quota')susp++});
+ L.forEach(function(s){var d=dd(s.id);if(d.sum)up++;var h=d.his&&d.his.samples;if(h&&h.length)onl+=h[h.length-1].online||0});
+ var kp=[['user','Total akun',tot,L.length+' server','b-info'],['wifi','Online sekarang',onl,'dari sampel terakhir','b-ok'],['clock','Segera habis',soon,exp+' sudah expired','b-warn'],['srv','Server aktif',up+'/'+L.length,susp+' akun tertahan',up===L.length?'b-ok':'b-bad']];
+ var h=kp.map(function(k){return '<div class="card kpi"><div class="ico badge '+k[4]+'" style="padding:0">'+ic(k[0])+'</div><div><div class="t">'+k[1]+'</div><div class="v">'+k[2]+'</div><div class="n">'+k[3]+'</div></div></div>'}).join('');
+ $('#kp').innerHTML=h;
+ var sc='';
+ L.forEach(function(s){var d=dd(s.id),m=d.sum;
+  if(!m){sc+='<div class="card srv"><div class="h"><span class="dot bad"></span><b>'+esc(s.name)+'</b></div><div class="note" style="color:var(--bad)">'+esc(d.sumE||'Tidak terjangkau')+'</div></div>';return}
+  var c=m.counts||{},n=(c.vmess||0)+(c.vless||0)+(c.trojan||0)+(c.ss||0)+(c.sshws||0);
+  var cls=function(p){return p>=90?'b':(p>=75?'w':'')};
+  var sv=Object.keys(m.services||{}).map(function(k){var ok=m.services[k]==='active';return '<span class="pill"><span class="dot '+(ok?'ok':'bad')+'"></span>'+esc(k)+'</span>'}).join('');
+  var ssl=m.ssl&&m.ssl.present?(m.ssl.days_left<=7?'<span class="badge b-bad">SSL '+m.ssl.days_left+' hari</span>':'<span class="badge b-n">SSL '+m.ssl.days_left+' hari</span>'):'';
+  sc+='<div class="card srv"><div class="h"><span class="dot ok"></span><b>'+esc(s.name)+'</b><span class="badge b-n" style="margin-left:auto">'+(d.ms||0)+' ms</span></div>'
+   +'<div class="kv"><span>Domain</span><span class="mono">'+esc(m.domain)+'</span><span>IP</span><span class="mono">'+esc(m.server_ip)+'</span><span>Uptime</span><span>'+esc(m.uptime)+'</span><span>Akun</span><span><b>'+n+'</b> · SSH '+(c.sshws||0)+' · Xray '+((c.vmess||0)+(c.vless||0)+(c.trojan||0)+(c.ss||0))+'</span></div>'
+   +'<div style="margin-top:12px;display:grid;gap:8px">'
+   +[['CPU',m.cpu_pct],['RAM',m.mem_pct],['Disk',m.disk_pct]].map(function(x){return '<div><div class="row sb" style="font-size:12px"><span class="muted">'+x[0]+'</span><b>'+(x[1]||0)+'%</b></div><div class="bar '+cls(x[1]||0)+'"><i style="width:'+Math.min(100,x[1]||0)+'%"></i></div></div>'}).join('')+'</div>'
+   +'<div class="svc">'+sv+'</div><div class="row" style="margin-top:10px;gap:6px">'+ssl+'<span class="badge b-n">v'+esc((m.features||{}).script_version||'-')+'</span></div></div>'});
+ $('#sc').innerHTML=sc;
+ var pick=S.sel!=='all'?S.sel:(L[0]&&L[0].id);
+ var sel='<select id="dSel" style="width:auto;min-height:32px">'+L.map(function(s){return '<option value="'+esc(s.id)+'"'+(s.id===pick?' selected':'')+'>'+esc(s.name)+'</option>'}).join('')+'</select>';
+ var ex=acc.filter(function(a){var s=accStat(a)[2];return s==='soon'||s==='exp'}).sort(function(a,b){return (daysLeft(a.exp)||0)-(daysLeft(b.exp)||0)}).slice(0,8);
+ var act=[];L.forEach(function(s){((dd(s.id).act||{}).items||[]).slice(0,6).forEach(function(i){act.push(Object.assign({sn:s.name},i))})});
+ act.sort(function(a,b){return (b.t||b.ts||0)-(a.t||a.ts||0)});
+ var tail='<div class="grid g21" style="margin-top:14px"><div class="card"><h3>Pengguna online <span class="r">'+(L.length>1?sel:'')+'</span></h3><div id="chO"></div></div>'
+  +'<div class="card"><h3>Akan expired <span class="r">'+ex.length+' akun</span></h3>'+(ex.length?ex.map(function(a){var d=daysLeft(a.exp);return '<div class="row sb" style="padding:7px 0;border-top:1px solid var(--bd)"><div><b>'+esc(a.username)+'</b><div class="faint" style="font-size:12px">'+esc(PROTO[a.proto]||a.proto)+(L.length>1?' · '+esc(a.sname):'')+'</div></div><span class="badge '+(d<0?'b-bad':'b-warn')+'">'+(d<0?'expired':d+' hari')+'</span></div>'}).join(''):'<div class="empty">Tidak ada.</div>')+'</div></div>'
+  +'<div class="grid g21" style="margin-top:14px"><div class="card"><h3>Trafik 14 hari <span class="r" id="trL"></span></h3><div id="chT"></div></div>'
+  +'<div class="card"><h3>Aktivitas terbaru</h3>'+(act.length?act.slice(0,8).map(function(i){return '<div style="padding:7px 0;border-top:1px solid var(--bd);font-size:12.5px"><div>'+esc(i.msg||i.text||i.action||JSON.stringify(i))+'</div><div class="faint" style="font-size:11.5px">'+esc(i.sn)+(i.t||i.ts?' · '+ago(i.t||i.ts):'')+'</div></div>'}).join(''):'<div class="empty">Belum ada aktivitas.</div>')+'</div></div>';
+ $('#view').insertAdjacentHTML('beforeend','<div id="dTail">'+tail+'</div>');
+ var dt=$('#dTail');dt.parentNode.querySelectorAll('#dTail').forEach(function(x,i,a){if(i<a.length-1)x.remove()});
+ function charts(id){var d=dd(id),h=(d.his&&d.his.samples)||[];$('#chO').innerHTML=lineChart(h);
+  var t=d.sum&&d.sum.traffic;$('#chT').innerHTML=t&&t.supported?barChart(t.days||[]):'<div class="empty">vnStat belum aktif di server ini.</div>';$('#trL').textContent=t&&t.month?'bulan ini ↓'+bytes(t.month.rx)+' ↑'+bytes(t.month.tx):''}
+ if(pick)charts(pick);var ds=$('#dSel');if(ds)ds.onchange=function(){charts(this.value)}}
+function lineChart(h){if(!h||h.length<2)return '<div class="empty">Data grafik belum cukup (dikumpulkan tiap beberapa menit).</div>';
+ var W=640,H=170,p=26,mx=Math.max.apply(null,h.map(function(x){return x.online||0}).concat([1])),n=h.length;
+ var X=function(i){return p+i*(W-p-8)/(n-1)},Y=function(v){return H-18-(v/mx)*(H-36)};
+ var d=h.map(function(x,i){return (i?'L':'M')+X(i).toFixed(1)+' '+Y(x.online||0).toFixed(1)}).join(' ');
+ var gl=[0,.5,1].map(function(f){var y=Y(mx*f);return '<line x1="'+p+'" x2="'+(W-8)+'" y1="'+y+'" y2="'+y+'" stroke="var(--bd)"/><text x="2" y="'+(y+3)+'">'+Math.round(mx*f)+'</text>'}).join('');
+ var t0=new Date(h[0].t*1000),t1=new Date(h[n-1].t*1000),f=function(d){return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)};
+ return '<svg class="chart" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="Grafik pengguna online"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--a)" stop-opacity=".35"/><stop offset="1" stop-color="var(--a)" stop-opacity="0"/></linearGradient></defs>'+gl+'<path d="'+d+' L'+X(n-1)+' '+(H-18)+' L'+X(0)+' '+(H-18)+'Z" fill="url(#lg)"/><path d="'+d+'" fill="none" stroke="var(--a)" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><text x="'+p+'" y="'+(H-3)+'">'+f(t0)+'</text><text x="'+(W-8)+'" y="'+(H-3)+'" text-anchor="end">'+f(t1)+'</text></svg>'}
+function barChart(days){if(!days.length)return '<div class="empty">Belum ada data.</div>';
+ var W=640,H=170,p=6,mx=Math.max.apply(null,days.map(function(x){return x.rx+x.tx}).concat([1])),bw=(W-2*p)/days.length;
+ var b=days.map(function(x,i){var h1=(x.rx/mx)*(H-34),h2=(x.tx/mx)*(H-34),xx=p+i*bw+bw*.18,w=bw*.64;
+  return '<rect x="'+xx+'" y="'+(H-18-h1)+'" width="'+w+'" height="'+h1+'" rx="2" fill="var(--a)"><title>'+esc(x.d)+' ↓'+bytes(x.rx)+'</title></rect><rect x="'+xx+'" y="'+(H-18-h1-h2)+'" width="'+w+'" height="'+h2+'" rx="2" fill="var(--a2)" opacity=".75"><title>'+esc(x.d)+' ↑'+bytes(x.tx)+'</title></rect>'+((i%2===0||days.length<8)?'<text x="'+(xx+w/2)+'" y="'+(H-4)+'" text-anchor="middle">'+esc(x.d)+'</text>':'')}).join('');
+ return '<svg class="chart" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="Grafik trafik harian">'+b+'</svg><div class="row" style="gap:14px;font-size:12px;margin-top:4px"><span class="muted"><span class="dot" style="background:var(--a)"></span> Download</span><span class="muted"><span class="dot" style="background:var(--a2)"></span> Upload</span></div>'}
+
+/* ---------- AKUN ---------- */
+function rAcc(force){
+ var v=$('#view');if(!S.servers.length){v.innerHTML=noServer();afterNoServer();return}
+ var ids=srvList().map(function(s){return s.id}),had=!force&&ids.every(function(i){return dd(i).acc});
+ if(had)drawAcc();else v.innerHTML=skeleton(2);
+ load(ids,['acc'],force).then(function(ch){if(S.page==='acc'&&(!had||ch))drawAcc()})}
+function filtered(){var q=S.flt.q.toLowerCase(),rows=allAcc().filter(function(a){
+  if(q&&a.username.toLowerCase().indexOf(q)<0)return false;
+  if(S.flt.proto&&(S.flt.proto==='xray'?a.proto==='sshws':a.proto!==S.flt.proto))return false;
+  if(S.flt.st&&accStat(a)[2]!==S.flt.st)return false;return true});
+ var k=S.sort.k,d=S.sort.d;rows.sort(function(a,b){var x,y;
+  if(k==='exp'){x=daysLeft(a.exp);y=daysLeft(b.exp);x=x===null?1e9:x;y=y===null?1e9:y}
+  else if(k==='used'){x=a.used_mb;y=b.used_mb}else if(k==='user'){x=a.username.toLowerCase();y=b.username.toLowerCase()}
+  else if(k==='proto'){x=a.proto;y=b.proto}else{x=a.sname;y=b.sname}
+  return (x<y?-1:x>y?1:0)*d});return rows}
+function drawAcc(){
+ var v=$('#view'),errs=srvList().filter(function(s){return dd(s.id).accE});
+ var multi=S.servers.length>1&&S.sel==='all';
+ var sts=[['','Semua'],['ok','Aktif'],['soon','Segera habis'],['exp','Expired'],['quota','Kuota habis'],['susp','Ditangguhkan']];
+ var h=(errs.length?'<div class="note" style="color:var(--bad);margin:0 0 12px">'+errs.map(function(s){return esc(s.name)+': '+esc(dd(s.id).accE)}).join('<br>')+'</div>':'')
+ +'<div class="tools"><input class="grow" id="fq" placeholder="Cari username…" value="'+esc(S.flt.q)+'" autocomplete="off">'
+ +'<select id="fp"><option value="">Semua protokol</option><option value="sshws">SSH-WS</option><option value="xray">Semua Xray</option>'+['vmess','vless','trojan','ss'].map(function(p){return '<option value="'+p+'">'+PROTO[p]+'</option>'}).join('')+'</select>'
+ +'<button class="btn p" id="bNew">'+ic('plus')+' Buat akun</button><button class="btn" id="bCsv">'+ic('dl')+' CSV</button></div>'
+ +'<div class="chips" style="margin-bottom:12px" id="fs">'+sts.map(function(s){return '<button class="chip'+(S.flt.st===s[0]?' on':'')+'" data-s="'+s[0]+'">'+s[1]+'</button>'}).join('')+'</div><div id="tb"></div>';
+ v.innerHTML=h;$('#fp').value=S.flt.proto;
+ $('#fq').oninput=function(){S.flt.q=this.value;S.lim=60;tbl()};
+ $('#fp').onchange=function(){S.flt.proto=this.value;S.lim=60;tbl()};
+ $('#fs').onclick=function(e){var b=e.target.closest('[data-s]');if(!b)return;S.flt.st=b.getAttribute('data-s');S.lim=60;[].forEach.call(this.children,function(c){c.classList.toggle('on',c===b)});tbl()};
+ $('#bNew').onclick=function(){createAcc()};
+ $('#bCsv').onclick=function(){var r=filtered(),c='server,username,protokol,expired,sisa_hari,ip_limit,kuota_mb,terpakai_mb,status\n'+r.map(function(a){return [a.sname,a.username,a.proto,a.exp,daysLeft(a.exp),a.ip_limit,a.quota_mb,a.used_mb,accStat(a)[0]].map(function(x){return '"'+String(x==null?'':x).replace(/"/g,'""')+'"'}).join(',')}).join('\n');save('akun.csv',c,'text/csv')};
+ tbl();
+ function tbl(){var rows=filtered(),vis=rows.slice(0,S.lim),pk=Object.keys(S.picked).length;
+  var th=function(k,l){return '<th class="sort" data-k="'+k+'">'+l+(S.sort.k===k?(S.sort.d>0?' ▲':' ▼'):'')+'</th>'};
+  var t='<div class="tw"><table class="rs"><thead><tr><th style="width:34px"><input type="checkbox" id="ckAll" aria-label="Pilih semua"></th>'+(multi?th('srv','Server'):'')+th('user','Username')+th('proto','Protokol')+th('exp','Expired')+'<th>Limit</th>'+th('used','Kuota')+'<th>Status</th><th></th></tr></thead><tbody>';
+  if(!rows.length)t+='<tr><td colspan="9" class="empty">Tidak ada akun yang cocok.</td></tr>';
+  vis.forEach(function(a){var k=key(a),st=accStat(a),d=daysLeft(a.exp),qp=a.quota_mb>0?Math.min(100,Math.round(a.used_mb*100/a.quota_mb)):0;
+   t+='<tr data-k="'+esc(k)+'"><td class="ck"><input type="checkbox" class="ck1" '+(S.picked[k]?'checked':'')+' aria-label="Pilih '+esc(a.username)+'"></td>'+(multi?'<td data-l="Server">'+esc(a.sname)+'</td>':'')
+   +'<td data-l="Username"><b>'+esc(a.username)+'</b></td><td data-l="Protokol"><span class="badge b-n">'+esc(PROTO[a.proto]||a.proto)+'</span></td>'
+   +'<td data-l="Expired" style="white-space:nowrap"><span>'+esc(String(a.exp||'-').slice(0,16))+'</span> '+(d!==null?'<span class="badge '+(d<0?'b-bad':d<=3?'b-warn':'b-n')+'">'+(d<0?'lewat '+(-d)+' hr':d+' hr')+'</span>':'')+'</td>'
+   +'<td data-l="Limit" style="white-space:nowrap">'+(a.ip_limit>0?a.ip_limit+' perangkat':'∞')+'</td>'
+   +'<td data-l="Kuota" style="min-width:120px">'+(a.quota_mb>0?'<div style="width:110px"><div class="faint" style="font-size:11.5px;text-align:right">'+mb(a.used_mb)+' / '+mb(a.quota_mb)+'</div><div class="bar '+(qp>=90?'b':qp>=75?'w':'')+'"><i style="width:'+qp+'%"></i></div></div>':'<span class="muted">'+mb(a.used_mb)+' · ∞</span>')+'</td>'
+   +'<td data-l="Status"><span class="badge b-'+st[1]+'">'+st[0]+'</span></td>'
+   +'<td class="ac"><button class="btn s" data-a="link" title="Detail & link">'+ic('link')+' Detail</button> <button class="btn s" data-a="renew" title="Perpanjang" aria-label="Perpanjang">'+ic('cal')+'<span class="bt">Perpanjang</span></button> <button class="btn s" data-a="edit" title="Edit limit" aria-label="Edit limit">'+ic('edit')+'<span class="bt">Edit</span></button>'+(a.proto==='sshws'?' <button class="btn s" data-a="kick" title="Kick sesi" aria-label="Kick">'+ic('kick')+'<span class="bt">Kick</span></button>':'')+' <button class="btn s d" data-a="del" title="Hapus" aria-label="Hapus">'+ic('del')+'<span class="bt">Hapus</span></button></td></tr>'});
+  t+='</tbody></table></div><div class="row sb" style="margin-top:10px"><span class="muted">'+rows.length+' akun'+(rows.length>vis.length?' · tampil '+vis.length:'')+'</span>'+(rows.length>vis.length?'<button class="btn" id="more">Tampilkan lebih banyak</button>':'')+'</div>'
+   +(pk?'<div class="bulk"><b>'+pk+' dipilih</b><span style="flex:1"></span><button class="btn s" id="bkR">'+ic('cal')+' Perpanjang</button><button class="btn s" id="bkD">'+ic('del')+' Hapus</button><button class="btn s" id="bkX">Batal</button></div>':'');
+  $('#tb').innerHTML=t;
+  var ca=$('#ckAll');ca.checked=vis.length&&vis.every(function(a){return S.picked[key(a)]});
+  ca.onchange=function(){vis.forEach(function(a){if(ca.checked)S.picked[key(a)]=1;else delete S.picked[key(a)]});tbl()};
+  $('#tb').querySelectorAll('th.sort').forEach(function(x){x.onclick=function(){var k=x.getAttribute('data-k');if(S.sort.k===k)S.sort.d*=-1;else{S.sort.k=k;S.sort.d=1}tbl()}});
+  $('#tb').querySelectorAll('.ck1').forEach(function(c){c.onchange=function(){var k=c.closest('tr').getAttribute('data-k');if(c.checked)S.picked[k]=1;else delete S.picked[k];tbl()}});
+  var m=$('#more');if(m)m.onclick=function(){S.lim+=60;tbl()};
+  $('#tb').querySelectorAll('[data-a]').forEach(function(b){b.onclick=function(){var k=b.closest('tr').getAttribute('data-k'),a=allAcc().filter(function(x){return key(x)===k})[0];if(a)rowAct(b.getAttribute('data-a'),a,b)}});
+  var r=$('#bkR');if(r)r.onclick=bulkRenew;var d=$('#bkD');if(d)d.onclick=bulkDel;var x=$('#bkX');if(x)x.onclick=function(){S.picked={};tbl()}}
+ S._tbl=tbl}
+function pickedAcc(){var m=allAcc(),ks=S.picked;return m.filter(function(a){return ks[key(a)]})}
+function rowAct(act,a,btn){
+ if(act==='link')return showLink(a);
+ if(act==='renew')return renewDlg([a]);
+ if(act==='edit')return editDlg(a);
+ if(act==='kick')return ask('Putuskan semua sesi SSH milik '+a.username+' sekarang?','Kick',true).then(function(y){if(!y)return;busy(btn,1);vps(a.sid,'action=kick','POST',{username:a.username}).then(function(r){busy(btn,0);toast(bad(r)?errMsg(r):(r.message||'Sesi diputus'),bad(r))},function(e){busy(btn,0);toast(e.message,1)})});
+ if(act==='del')return ask('Hapus akun '+a.username+' ('+(PROTO[a.proto]||a.proto)+') di '+a.sname+'?\nTindakan ini tidak bisa dibatalkan.','Hapus',true).then(function(y){if(!y)return;busy(btn,1);vps(a.sid,'action=accounts','DELETE',{proto:a.proto,username:a.username}).then(function(r){busy(btn,0);if(bad(r))return toast(errMsg(r),1);toast('Akun dihapus');delete S.picked[key(a)];dd(a.sid).acc=null;rAcc(true)},function(e){busy(btn,0);toast(e.message,1)})})}
+function showLink(a){
+ var o=modal('<h2>'+esc(a.username)+'</h2><div class="muted">'+esc(a.sdi&&a.sdi.installed?'SSH + SlowDNS':(PROTO[a.proto]||a.proto))+' · '+esc(a.sname)+'</div><div id="lb" style="margin-top:12px"><span class="spin"></span> Memuat…</div>',true);
+ vps(a.sid,'action=link&proto='+encodeURIComponent(a.proto)+'&username='+encodeURIComponent(a.username)).then(function(r){var b=$('#lb',o);if(bad(r)){b.innerHTML='<div class="note" style="color:var(--bad)">'+esc(errMsg(r))+'</div>';return}
+  var t=String(r.detail||'');if(a.sdi&&a.sdi.installed)t=sdCard(t,a.sdi);var links=t.match(/(?:vmess|vless|trojan|ss):\/\/\S+/g)||[];
+  b.innerHTML=(links.length?links.map(function(l,i){var nm=/^vmess/.test(l)?'VMess':/^vless/.test(l)?'VLess':/^trojan/.test(l)?'Trojan':'SS';return '<div class="lk"><span class="badge b-info">'+nm+(l.indexOf('security=tls')>=0||/tls/i.test(l.slice(0,20))?'':'')+'</span><code>'+esc(l)+'</code><button class="btn s" data-c="'+i+'">'+ic('copy')+'</button></div>'}).join(''):'')
+   +'<pre>'+esc(t)+'</pre><div class="acts"><button class="btn" data-ct>'+ic('copy')+' Salin pesan akun</button><button class="btn p" data-x>Tutup</button></div>';
+  b.querySelectorAll('[data-c]').forEach(function(x){x.onclick=function(){copy(links[+x.getAttribute('data-c')])}});
+  b.querySelector('[data-ct]').onclick=function(){copy(t+(o._ov?'\n\n── Download config OpenVPN ──\n'+o._ov+'\n(link berlaku beberapa menit)':''))};b.querySelector('[data-x]').onclick=function(){o.close()};
+  var sm=dd(a.sid).sum,ovOn=!sm||!sm.features||sm.features.openvpn!==false;
+  if(a.proto==='sshws'&&ovOn&&!(a.sdi&&a.sdi.installed)){var ob=document.createElement('div');ob.innerHTML='<div class="sec" style="margin-top:14px">OpenVPN</div><button class="btn" id="ovGo">'+ic('dl')+' Buat link download config .ovpn</button><div id="ovR" style="margin-top:8px"></div>';b.insertBefore(ob,b.querySelector('.acts'));
+   $('#ovGo',o).onclick=function(){var g=this;busy(g,1,'Membuat link');vps(a.sid,'action=ovpn_links&username='+encodeURIComponent(a.username)).then(function(r){busy(g,0);var R=$('#ovR',o);
+    if(bad(r)){R.innerHTML='<div class="note" style="color:var(--bad)">'+esc(errMsg(r))+'</div>';return}
+    var f=r.files||[];o._ov=f.map(function(x){return x.url}).join('\n');
+    R.innerHTML=f.map(function(x,i){return '<div class="lk"><a class="btn s" href="'+esc(x.url)+'" target="_blank" rel="noopener" download>'+ic('dl')+' Unduh</a><code title="'+esc(x.url)+'">'+esc(x.name||x.url)+'</code><button class="btn s" data-oc="'+i+'">'+ic('copy')+'</button></div>'}).join('')+'<div class="note">Link berlaku '+(r.ttl_min||60)+' menit. Login memakai username &amp; password akun SSH ini.'+(r.warning?' '+esc(r.warning):'')+'</div>'+(f.length?'<div class="row" style="margin-top:8px"><button class="btn s" id="ocAll">'+ic('copy')+' Salin semua link</button></div>':'');
+    R.querySelectorAll('[data-oc]').forEach(function(x){x.onclick=function(){copy(f[+x.getAttribute('data-oc')].url)}});var ca=$('#ocAll',o);if(ca)ca.onclick=function(){copy(o._ov)}},function(e){busy(g,0);toast(e.message,1)})};if(a.autoOv)$('#ovGo',o).click();}else if(a.proto==='sshws'){var nb=document.createElement('div');nb.innerHTML='<div class="sec" style="margin-top:14px">OpenVPN</div><div class="note">OpenVPN belum terpasang di server ini. Pasang lewat menu VPS: <b>16 → Install OpenVPN</b>, lalu link download config muncul di sini.</div>';b.insertBefore(nb,b.querySelector('.acts'))}},function(e){$('#lb',o).textContent=e.message})}
+function renewDlg(list){
+ var o=modal('<h2>Perpanjang akun</h2><div class="muted">'+list.length+' akun dipilih'+(list.length===1?' · '+esc(list[0].username):'')+'</div><label class="l">Tambah masa aktif</label><div class="chips" id="dc">'+[7,15,30,60,90].map(function(d){return '<button class="chip'+(d===30?' on':'')+'" data-d="'+d+'">'+d+' hari</button>'}).join('')+'</div><label class="l">Atau isi sendiri (hari)</label><input id="dd" type="number" min="1" max="3650" value="30" inputmode="numeric"><div class="acts"><button class="btn" data-n>Batal</button><button class="btn p" data-y>Perpanjang</button></div>');
+ $('#dc',o).onclick=function(e){var b=e.target.closest('[data-d]');if(!b)return;$('#dd',o).value=b.getAttribute('data-d');[].forEach.call(this.children,function(c){c.classList.toggle('on',c===b)})};
+ o.querySelector('[data-n]').onclick=function(){o.close()};
+ o.querySelector('[data-y]').onclick=function(){var days=parseInt($('#dd',o).value,10),b=this;if(!(days>0))return toast('Isi jumlah hari',1);busy(b,1,'Memproses');
+  par(list,function(a){return vps(a.sid,'action=renew','POST',{proto:a.proto,username:a.username,days:days})},3).then(function(rs){busy(b,0);var f=rs.filter(bad).length;o.close();toast(f?(list.length-f)+' berhasil, '+f+' gagal: '+errMsg(rs.filter(bad)[0]):list.length+' akun diperpanjang '+days+' hari',!!f);S.picked={};list.forEach(function(a){dd(a.sid).acc=null});rAcc(true)})}}
+function bulkRenew(){renewDlg(pickedAcc())}
+function bulkDel(){var l=pickedAcc();ask('Hapus '+l.length+' akun terpilih?\nTindakan ini tidak bisa dibatalkan.','Hapus semua',true).then(function(y){if(!y)return;toast('Menghapus…');par(l,function(a){return vps(a.sid,'action=accounts','DELETE',{proto:a.proto,username:a.username})},2).then(function(rs){var f=rs.filter(bad).length;toast(f?(l.length-f)+' terhapus, '+f+' gagal: '+errMsg(rs.filter(bad)[0]):l.length+' akun dihapus',!!f);S.picked={};l.forEach(function(a){dd(a.sid).acc=null});rAcc(true)})})}
+function editDlg(a){
+ var o=modal('<h2>Edit limit</h2><div class="muted">'+esc(a.username)+' · '+esc(PROTO[a.proto]||a.proto)+'</div><div class="two"><div><label class="l">Limit perangkat (0 = tanpa batas)</label><input id="el" type="number" min="0" value="'+(a.ip_limit||0)+'" inputmode="numeric"></div><div><label class="l">Kuota GB (0 = tanpa batas)</label><input id="eq" type="number" min="0" value="'+Math.round((a.quota_mb||0)/1024)+'" inputmode="numeric"></div></div><div class="acts"><button class="btn" data-n>Batal</button><button class="btn p" data-y>Simpan</button></div>');
+ o.querySelector('[data-n]').onclick=function(){o.close()};
+ o.querySelector('[data-y]').onclick=function(){var b=this;busy(b,1,'Menyimpan');vps(a.sid,'action=edit_limits','POST',{proto:a.proto,username:a.username,ip_limit:parseInt($('#el',o).value,10)||0,quota_gb:parseInt($('#eq',o).value,10)||0}).then(function(r){busy(b,0);if(bad(r))return toast(errMsg(r),1);o.close();toast('Limit disimpan');dd(a.sid).acc=null;rAcc(true)},function(e){busy(b,0);toast(e.message,1)})}}
+function sdCheck(id){return vps(id,'action=slowdns').then(function(r){if(bad(r)){toast('API server belum mendukung SlowDNS: update Panel Web di VPS (menu 15). Akun SSH tetap dibuat.',1);return null}if(!r.installed){toast('SlowDNS belum terpasang di server ini (pasang lewat menu HCR di VPS). Akun SSH tetap dibuat.',1);return null}if(!r.active)toast('Layanan SlowDNS sedang mati di server ini. Akun SSH tetap dibuat.',1);return r},function(){return null})}
+function sdCard(t,i){function g(k){var m=t.match(new RegExp('^'+k+'\\s*:\\s*(.*)$','m'));return m?m[1].trim():''}
+ return ['✅ AKUN SSH SLOWDNS','Host/Domain   : '+g('Domain/IP'),'NameServer    : '+i.ns,'Username      : '+g('Username'),'Password      : '+g('Password'),'PUB Key       : '+i.pubkey,'Port SlowDNS  : '+(i.port||53)+' (UDP)','Expired       : '+g('Expired'),'Limit Sesi    : '+g('Limit Sesi'),'Limit Kuota   : '+g('Limit Kuota'),'','Aplikasi: HTTP Custom → SSH + SlowDNS, isi NameServer & PUB Key'].join('\n')}
+function createAcc(){
+ var L=S.servers,defp=S.flt.proto&&PROTO[S.flt.proto]?S.flt.proto:'sshws';
+ var o=modal('<h2>Buat akun baru</h2>'
+  +(L.length>1?'<label class="l">Server (bisa pilih lebih dari satu)</label><div class="chips" id="cs">'+L.map(function(s){return '<button type="button" class="chip'+((S.sel==='all'?L[0].id:S.sel)===s.id?' on':'')+'" data-i="'+esc(s.id)+'">'+esc(s.name)+'</button>'}).join('')+'</div>':'')
+  +'<div class="two"><div><label class="l">Protokol</label><select id="cp">'+Object.keys(PROTO).map(function(p){return '<option value="'+p+'"'+(p===defp?' selected':'')+'>'+PROTO[p]+'</option>'}).join('')+'<option value="slowdns"'+(S.flt.proto==='slowdns'?' selected':'')+'>SSH + SlowDNS (HCR)</option></select></div><div><label class="l">Username</label><input id="cu" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="huruf/angka/_ 3-32"></div></div>'
+  +'<div id="cpw"><label class="l">Password SSH</label><input id="cpwv" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="bebas, min 1 karakter (tanpa spasi)"></div>'
+  +'<div class="two"><div><label class="l">Masa aktif (hari)</label><input id="cd" type="number" min="1" value="30" inputmode="numeric"></div><div><label class="l">Limit perangkat</label><input id="ci" type="number" min="0" value="2" inputmode="numeric"></div></div>'
+  +'<div class="two"><div><label class="l">Kuota GB (0 = ∞)</label><input id="cq" type="number" min="0" value="0" inputmode="numeric"></div><div><label class="l">Trial (jam, 0 = bukan)</label><input id="ct" type="number" min="0" value="0" inputmode="numeric"></div></div>'
+  +'<div class="acts"><button class="btn" data-n>Batal</button><button class="btn p" data-y>Buat akun</button></div>',true);
+ var pick={};(L.length>1?[S.sel==='all'?L[0].id:S.sel]:[L[0].id]).forEach(function(i){pick[i]=1});
+ var cs=$('#cs',o);if(cs)cs.onclick=function(e){var b=e.target.closest('[data-i]');if(!b)return;var i=b.getAttribute('data-i');if(pick[i]&&Object.keys(pick).length>1){delete pick[i];b.classList.remove('on')}else{pick[i]=1;b.classList.add('on')}};
+ function tg(){var v=$('#cp',o).value;$('#cpw',o).classList.toggle('hide',v!=='sshws'&&v!=='slowdns')}tg();$('#cp',o).onchange=tg;
+ o.querySelector('[data-n]').onclick=function(){o.close()};
+ o.querySelector('[data-y]').onclick=function(){var b=this,u=$('#cu',o).value.trim(),p=$('#cp',o).value,pw=$('#cpwv',o).value,sd=p==='slowdns';if(sd)p='sshws';
+  if(!/^[a-zA-Z0-9_]{3,32}$/.test(u))return toast('Username: huruf/angka/underscore, 3-32 karakter',1);
+  if(p==='sshws'&&(pw.length<1||pw.length>64||/[\s|]/.test(pw)))return toast('Password SSH 1-64 karakter, tanpa spasi dan |',1);
+  var body={proto:p,username:u,days:+$('#cd',o).value||30,ip_limit:+$('#ci',o).value||0,quota_gb:+$('#cq',o).value||0,trial_hours:+$('#ct',o).value||0,password:pw};
+  var ids=Object.keys(pick);busy(b,1,'Membuat');
+  par(ids,function(id){return vps(id,'action=accounts','POST',body)},2).then(function(rs){busy(b,0);var okc=[],er=[];rs.forEach(function(r,i){if(bad(r))er.push(srvName(ids[i])+': '+errMsg(r));else okc.push(ids[i])});
+   if(er.length)toast(er.join(' | '),1);if(!okc.length)return;o.close();ids.forEach(function(id){dd(id).acc=null});
+   if(okc.length===1){var a={sid:okc[0],sname:srvName(okc[0]),proto:p,username:u,autoOv:p==='sshws'};(sd?sdCheck(okc[0]):Promise.resolve(null)).then(function(i){a.sdi=i;showLink(a)})}else{toast('Akun dibuat di '+okc.length+' server');if(sd)sdCheck(okc[0])}
+   rAcc(true)},function(e){busy(b,0);toast(e.message,1)})}}
+
+
+/* ---------- TRIAL CEPAT ---------- */
+function trialDlg(){
+ if(!S.servers.length){toast('Tambahkan server dulu',1);return}
+ var L=S.servers,pick={},hrs=3,uname='trial'+Math.random().toString(36).slice(2,6),upw=Math.random().toString(36).slice(2,10);
+ pick[S.sel==='all'?L[0].id:S.sel]=1;
+ var o=modal('<h2>Trial cepat</h2><div class="muted">Akun sementara, otomatis nonaktif setelah durasi habis.</div>'
+  +(L.length>1?'<label class="l">Server</label><div class="chips" id="ts">'+L.map(function(s){return '<button type="button" class="chip'+(pick[s.id]?' on':'')+'" data-i="'+esc(s.id)+'">'+esc(s.name)+'</button>'}).join('')+'</div>':'')
+  +'<label class="l">Durasi</label><div class="chips" id="th">'+[1,3,6,12,24].map(function(h){return '<button type="button" class="chip'+(h===hrs?' on':'')+'" data-h="'+h+'">'+h+' jam</button>'}).join('')+'</div>'
+  +'<div class="two"><div><label class="l">Protokol</label><select id="tp">'+Object.keys(PROTO).map(function(p){return '<option value="'+p+'"'+(p==='sshws'?' selected':'')+'>'+PROTO[p]+'</option>'}).join('')+'<option value="slowdns">SSH + SlowDNS (HCR)</option></select></div><div><label class="l">Limit perangkat</label><input id="tl" type="number" min="1" value="1" inputmode="numeric"></div></div>'
+  +'<div class="two"><div><label class="l">Username</label><input id="tu" value="'+uname+'" autocapitalize="off" spellcheck="false"></div><div id="tpwb"><label class="l">Password SSH</label><input id="tpw" value="'+upw+'" autocapitalize="off" spellcheck="false"></div></div>'
+  +'<div class="acts"><button class="btn" data-n>Batal</button><button class="btn p" data-y>'+ic('bolt')+' Buat trial</button></div>');
+ var ts=$('#ts',o);if(ts)ts.onclick=function(e){var b=e.target.closest('[data-i]');if(!b)return;var i=b.getAttribute('data-i');if(pick[i]&&Object.keys(pick).length>1){delete pick[i];b.classList.remove('on')}else{pick[i]=1;b.classList.add('on')}};
+ $('#th',o).onclick=function(e){var b=e.target.closest('[data-h]');if(!b)return;hrs=+b.getAttribute('data-h');[].forEach.call(this.children,function(c){c.classList.toggle('on',c===b)})};
+ function tg(){var v=$('#tp',o).value;$('#tpwb',o).classList.toggle('hide',v!=='sshws'&&v!=='slowdns')}tg();$('#tp',o).onchange=tg;
+ o.querySelector('[data-n]').onclick=function(){o.close()};
+ o.querySelector('[data-y]').onclick=function(){var b=this,u=$('#tu',o).value.trim(),p=$('#tp',o).value,pw=$('#tpw',o).value,sd=p==='slowdns';if(sd)p='sshws';
+  if(!/^[a-zA-Z0-9_]{3,32}$/.test(u))return toast('Username: huruf/angka/underscore, 3-32 karakter',1);
+  if(p==='sshws'&&(pw.length<1||pw.length>64||/[\s|]/.test(pw)))return toast('Password SSH 1-64 karakter, tanpa spasi dan |',1);
+  var body={proto:p,username:u,days:1,ip_limit:Math.max(1,+$('#tl',o).value||1),quota_gb:0,trial_hours:hrs,password:p==='sshws'?pw:''},ids=Object.keys(pick);
+  busy(b,1,'Membuat');
+  par(ids,function(id){return vps(id,'action=accounts','POST',body)},2).then(function(rs){busy(b,0);var okc=[],er=[];rs.forEach(function(r,i){if(bad(r))er.push(srvName(ids[i])+': '+errMsg(r));else okc.push(ids[i])});
+   if(er.length)toast(er.join(' | '),1);if(!okc.length)return;o.close();ids.forEach(function(id){dd(id).acc=null});
+   (sd?sdCheck(okc[0]):Promise.resolve(null)).then(function(i){showLink({sid:okc[0],sname:srvName(okc[0]),proto:p,username:u,autoOv:p==='sshws',sdi:i})});if(okc.length>1)toast('Trial dibuat di '+okc.length+' server (username sama)');
+   if(S.page==='acc')rAcc(true)},function(e){busy(b,0);toast(e.message,1)})}}
+
+/* ---------- ONLINE ---------- */
+function rOnl(force){
+ var v=$('#view');if(!S.servers.length){v.innerHTML=noServer();afterNoServer();return}
+ v.innerHTML='<div class="tools"><span class="muted" id="oInfo">Memuat…</span><span style="flex:1"></span><label class="row" style="gap:6px;font-weight:600;cursor:pointer"><input type="checkbox" id="oAuto" style="width:17px;min-height:17px;accent-color:var(--a)" '+(S.auto?'checked':'')+'> Auto-refresh 15 dtk</label><button class="btn" id="oRf">'+ic('ref')+' Muat ulang</button></div><div id="ob">'+skeleton(2)+'</div>';
+ $('#oRf').onclick=function(){fetchOnl(true)};
+ $('#oAuto').onchange=function(){S.auto=this.checked;stopAuto();if(S.auto)S.autoT=setInterval(function(){if(S.page==='onl'&&!document.hidden)fetchOnl(true,true)},15000)};
+ if(S.auto)S.autoT=setInterval(function(){if(S.page==='onl'&&!document.hidden)fetchOnl(true,true)},15000);
+ fetchOnl(true)}
+function fetchOnl(force,quiet){var ids=srvList().map(function(s){return s.id});
+ load(ids,['onl','acc'],force).then(function(){if(S.page!=='onl')return;drawOnl()})}
+function drawOnl(){
+ var L=srvList(),total=0,rows=[],errs=[];
+ L.forEach(function(s){var d=dd(s.id);if(d.onlE){errs.push(s.name+': '+d.onlE);return}var o=d.onl||{};
+  var lim={};((d.acc)||[]).forEach(function(a){lim[a.proto+'|'+a.username]=a.ip_limit});
+  (o.ssh||[]).forEach(function(x){var l=x.limit>0?x.limit:0;rows.push({sid:s.id,sn:s.name,user:x.user,proto:'SSH',kind:'ssh',n:x.devices||0,lim:l,det:'Dropbear '+(x.dropbear||0)+' · OpenSSH '+(x.openssh||0),ips:[]});total+=x.devices||0});
+  (o.xray||[]).forEach(function(x){var pr=String(x.proto||'?').split('/')[0],l=lim[(pr==='ss'?'ss':pr)+'|'+x.user]||0;
+   rows.push({sid:s.id,sn:s.name,user:x.user,proto:String(x.proto||'?').toUpperCase().replace(/\//g,' / '),kind:'xray',n:x.devices||0,lim:l,src:x.source,det:x.source==='traffic'?'Trafik bergerak':(x.source==='log'?'Perkiraan dari log':'Stats API'),ips:x.ips||[]});total+=x.devices||0});
+  (o.openvpn||[]).forEach(function(x){rows.push({sid:s.id,sn:s.name,user:x.user,proto:'OVPN '+String(x.proto||'').toUpperCase(),kind:'ovpn',n:1,lim:0,det:'VPN IP '+(x.vpn_ip||'-'),ips:x.ip?[x.ip]:[]});total++})});
+ rows.sort(function(a,b){return b.n-a.n});
+ var cn=$('#cntOnl');if(cn){cn.textContent=total;cn.classList.toggle('hide',!total)}
+ $('#oInfo').innerHTML='<b style="color:var(--ink)">'+rows.length+'</b> akun online · <b style="color:var(--ink)">'+total+'</b> perangkat · diperbarui '+new Date().toLocaleTimeString('id-ID');
+ var multi=S.servers.length>1&&S.sel==='all';
+ var h=errs.length?'<div class="note" style="color:var(--bad);margin:0 0 12px">'+errs.map(esc).join('<br>')+'</div>':'';
+ if(!rows.length)h+='<div class="card empty">Tidak ada pengguna online saat ini.</div>';
+ else{h+='<div class="tw"><table class="rs"><thead><tr>'+(multi?'<th>Server</th>':'')+'<th>Username</th><th>Protokol</th><th>Perangkat</th><th>Keterangan</th><th>IP sumber</th><th></th></tr></thead><tbody>';
+  rows.forEach(function(r,i){var over=r.lim>0&&r.n>r.lim&&r.src!=='traffic',full=r.lim>0&&r.n===r.lim;
+   h+='<tr data-i="'+i+'">'+(multi?'<td data-l="Server">'+esc(r.sn)+'</td>':'')+'<td data-l="Username"><b>'+esc(r.user)+'</b></td><td data-l="Protokol"><span class="badge b-n">'+esc(r.proto)+'</span></td>'
+   +'<td data-l="Perangkat">'+(r.src==='traffic'?'<span class="badge b-info">aktif</span>':'<span class="badge '+(over?'b-bad':full?'b-warn':'b-ok')+'">'+r.n+(r.lim>0?' / '+r.lim:'')+'</span>')+(over?' <span class="badge b-bad">melebihi</span>':'')+'</td>'
+   +'<td data-l="Keterangan" class="muted">'+esc(r.det)+'</td><td data-l="IP sumber" class="mono">'+(r.ips.length?r.ips.map(esc).join(', '):'<span class="faint">-</span>')+'</td>'
+   +'<td class="ac">'+(r.kind==='ssh'?'<button class="btn s" data-k>'+ic('kick')+' Kick</button>':'')+'</td></tr>'});
+  h+='</tbody></table></div><div class="note">Limit perangkat dibaca dari data akun. Akun Xray yang ditandai “aktif” berarti trafik sedang bergerak (jumlah perangkat tidak bisa dipastikan). Kick hanya tersedia untuk SSH.</div>'}
+ $('#ob').innerHTML=h;
+ $('#ob').querySelectorAll('[data-k]').forEach(function(b){b.onclick=function(){var r=rows[+b.closest('tr').getAttribute('data-i')];ask('Putuskan semua sesi SSH milik '+r.user+'?','Kick',true).then(function(y){if(!y)return;busy(b,1);vps(r.sid,'action=kick','POST',{username:r.user}).then(function(x){busy(b,0);toast(bad(x)?errMsg(x):(x.message||'Sesi diputus'),bad(x));setTimeout(function(){fetchOnl(true)},1200)},function(e){busy(b,0);toast(e.message,1)})})}})}
+
+/* ---------- SERVER ---------- */
+function rSrv(force){
+ var v=$('#view');
+ var h='<div class="tools"><span class="muted">'+S.servers.length+' server terdaftar</span><span style="flex:1"></span><button class="btn p" id="bAdd">'+ic('plus')+' Tambah server</button></div>';
+ if(!S.servers.length){v.innerHTML=h+noServer();$('#bAdd').onclick=addSrv;afterNoServer();return}
+ h+='<div class="grid g2" id="sl">'+skeleton(S.servers.length>2?2:S.servers.length)+'</div>';v.innerHTML=h;$('#bAdd').onclick=addSrv;
+ load(S.servers.map(function(s){return s.id}),['sum','sec'],force).then(function(){if(S.page==='srv')drawSrv()})}
+function drawSrv(){
+ var h='';
+ S.servers.forEach(function(s){var d=dd(s.id),m=d.sum,sec=d.sec;
+  h+='<div class="card srv" data-id="'+esc(s.id)+'"><div class="h"><span class="dot '+(m?'ok':'bad')+'"></span><b>'+esc(s.name)+'</b><span style="flex:1"></span><button class="btn s" data-e>'+ic('edit')+' Edit</button><button class="btn s ic d" data-d aria-label="Hapus server">'+ic('del')+'</button></div><div class="mono faint" style="margin-bottom:10px;word-break:break-all">'+esc(s.base)+'</div>';
+  if(!m){h+='<div class="note" style="color:var(--bad)">'+esc(d.sumE||'Tidak terjangkau')+'</div></div>';return}
+  h+='<div class="sec" style="margin-top:6px">Layanan</div><div class="grid" style="gap:6px">'+Object.keys(m.services||{}).map(function(k){var ok=m.services[k]==='active';return '<div class="row sb" style="padding:6px 0;border-top:1px solid var(--bd)"><span class="row" style="gap:8px"><span class="dot '+(ok?'ok':'bad')+'"></span><b>'+esc(k)+'</b><span class="faint">'+esc(m.services[k])+'</span></span><span class="row" style="gap:6px"><button class="btn s" data-sv="'+esc(k)+'" data-ac="restart">Restart</button>'+(ok?'<button class="btn s d" data-sv="'+esc(k)+'" data-ac="stop">Stop</button>':'<button class="btn s" data-sv="'+esc(k)+'" data-ac="start">Start</button>')+'</span></div>'}).join('')+'</div>';
+  h+='<div class="sec">Tugas VPS</div><div class="row" style="gap:6px"><button class="btn s" data-j="speedtest">'+ic('bolt')+' Speedtest VPS</button><button class="btn s" data-j="backup_now">'+ic('dl')+' Backup</button><button class="btn s" data-j="ssl_renew">'+ic('shield')+' Perbarui SSL</button></div><div id="jr-'+esc(s.id)+'" style="margin-top:8px"></div>';
+  if(sec){var f=sec.fail2ban||{},bn=f.banned||[];
+   h+='<div class="sec">Keamanan</div><div class="row sb" style="padding:6px 0"><span>Blokir torrent</span><button class="btn s '+(sec.torrent_block?'p':'')+'" data-tor="'+(sec.torrent_block?'off':'on')+'">'+(sec.torrent_block?'Aktif · matikan':'Mati · aktifkan')+'</button></div>'
+   +'<div class="row sb" style="padding:6px 0;border-top:1px solid var(--bd)"><span>Fail2ban</span><span class="badge '+(f.active?'b-ok':'b-n')+'">'+(f.active?'aktif':(f.installed?'mati':'tidak terpasang'))+'</span></div>'
+   +'<div class="row sb" style="padding:6px 0;border-top:1px solid var(--bd)"><span>BBR</span><span class="badge '+((sec.bbr||{}).enabled?'b-ok':'b-n')+'">'+esc((sec.bbr||{}).congestion||'-')+'</span></div>'
+   +(bn.length?'<div class="sec">IP diblokir ('+bn.length+')</div>'+bn.map(function(x){return '<div class="row sb" style="padding:5px 0;border-top:1px solid var(--bd)"><span class="mono">'+esc(x.ip)+' <span class="faint">'+esc(x.jail)+'</span></span><button class="btn s" data-ub="'+esc(x.ip)+'">Buka blokir</button></div>'}).join(''):'')}
+  h+='</div>'});
+ $('#sl').innerHTML=h;
+ $('#sl').querySelectorAll('.srv').forEach(function(c){var id=c.getAttribute('data-id'),s=S.servers.filter(function(x){return x.id===id})[0];
+  c.querySelector('[data-e]').onclick=function(){editSrv(s)};
+  c.querySelector('[data-d]').onclick=function(){ask('Hapus server "'+s.name+'" dari panel?\nAkun di VPS tidak ikut terhapus.','Hapus',true).then(function(y){if(!y)return;jf('/servers/'+id,{method:'DELETE'}).then(function(){toast('Server dihapus');loadServers().then(function(){rSrv()})})})};
+  c.querySelectorAll('[data-sv]').forEach(function(b){b.onclick=function(){var n=b.getAttribute('data-sv'),a=b.getAttribute('data-ac');ask(a+' layanan '+n+' di '+s.name+'?',a==='stop'?'Stop':'Ya',a==='stop').then(function(y){if(!y)return;busy(b,1);vps(id,'action=service','POST',{name:n,action:a}).then(function(r){busy(b,0);toast(bad(r)?errMsg(r):n+': '+r.state,bad(r));dd(id).sumT=0;load([id],['sum'],true).then(drawSrv)},function(e){busy(b,0);toast(e.message,1)})})}});
+  c.querySelectorAll('[data-j]').forEach(function(b){b.onclick=function(){runJob(id,b.getAttribute('data-j'),b)}});
+  var t=c.querySelector('[data-tor]');if(t)t.onclick=function(){busy(t,1);vps(id,'action=torrent','POST',{mode:t.getAttribute('data-tor')}).then(function(r){busy(t,0);toast(bad(r)?errMsg(r):'Disimpan',bad(r));dd(id).secT=0;load([id],['sec'],true).then(drawSrv)})};
+  c.querySelectorAll('[data-ub]').forEach(function(b){b.onclick=function(){busy(b,1);vps(id,'action=f2b_unban','POST',{ip:b.getAttribute('data-ub')}).then(function(r){busy(b,0);toast(bad(r)?errMsg(r):'IP dibuka',bad(r));dd(id).secT=0;load([id],['sec'],true).then(drawSrv)})}})})}
+function runJob(id,name,btn){if(name==='speedtest')return speedLive(id);var box=$('#jr-'+id),map={speedtest:'speedtest',backup_now:'backup',ssl_renew:'ssl_renew'},jn=map[name];
+ busy(btn,1);box.innerHTML='<div class="note"><span class="spin"></span> Menjalankan…</div>';
+ vps(id,'action='+name,'POST',{}).then(function(r){if(bad(r)){busy(btn,0);box.innerHTML='<div class="note" style="color:var(--bad)">'+esc(errMsg(r))+'</div>';return}
+  var n=0;(function poll(){if(S.page!=='srv'){return}
+   vps(id,'action=job&name='+jn).then(function(j){
+    if(name==='speedtest'){vps(id,'action=speedtest_live').then(function(l){if(l&&l.ok&&j.state==='running')box.innerHTML='<div class="note"><span class="spin"></span> '+esc(l.phase)+' · '+(l.mbps||0)+' Mbps · '+(l.progress||0)+'% <span class="faint">'+esc(l.server||'')+'</span></div>'},function(){})}
+    if(j.state==='running'&&n++<120)return setTimeout(poll,2000);
+    busy(btn,0);var res=j.result||j;box.innerHTML='<pre>'+esc(JSON.stringify(res,null,2)).slice(0,1800)+'</pre>'},function(e){busy(btn,0);box.innerHTML='<div class="note" style="color:var(--bad)">'+esc(e.message)+'</div>'})})()},function(e){busy(btn,0);toast(e.message,1)})}
+function srvForm(s){return '<label class="l">Nama server</label><input id="sn" maxlength="40" placeholder="contoh: SG-01" value="'+esc(s?s.name:'')+'"><label class="l">URL API</label><input id="sb" placeholder="https://domain-vps.com/api" autocapitalize="off" autocorrect="off" spellcheck="false" value="'+esc(s?s.base:'')+'"><label class="l">API key'+(s?' (kosongkan jika tidak diganti)':'')+'</label><input id="sk" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="dari menu vpn → 21 → 3"><div class="note">Worker tidak bisa mengakses IP langsung. Pakai domain dengan HTTPS valid. Key disimpan terenkripsi.</div>'}
+function addSrv(){var o=modal('<h2>Tambah server</h2>'+srvForm()+'<div class="acts"><button class="btn" data-n>Batal</button><button class="btn p" data-y>Simpan &amp; tes</button></div>');
+ o.querySelector('[data-n]').onclick=function(){o.close()};
+ o.querySelector('[data-y]').onclick=function(){var b=this;busy(b,1,'Menyimpan');jf('/servers',{method:'POST',body:{name:$('#sn',o).value,base:$('#sb',o).value,key:$('#sk',o).value}}).then(function(r){if(!r.ok){busy(b,0);return toast(r.error||'Gagal',1)}
+  jf('/ping/'+r.id).then(function(p){busy(b,0);o.close();toast(p.ok?'Server terhubung ('+p.ms+' ms)':'Tersimpan, tapi belum terhubung: '+(p.error||('HTTP '+p.status)),!p.ok);loadServers().then(function(){go(S.page==='srv'?'srv':S.page,true)})})},function(e){busy(b,0);toast(e.message,1)})}}
+function editSrv(s){var o=modal('<h2>Edit server</h2>'+srvForm(s)+'<div class="acts"><button class="btn" data-n>Batal</button><button class="btn p" data-y>Simpan</button></div>');
+ o.querySelector('[data-n]').onclick=function(){o.close()};
+ o.querySelector('[data-y]').onclick=function(){var b=this,body={name:$('#sn',o).value,base:$('#sb',o).value};var k=$('#sk',o).value;if(k)body.key=k;busy(b,1,'Menyimpan');jf('/servers/'+s.id,{method:'PUT',body:body}).then(function(r){busy(b,0);if(!r.ok)return toast(r.error||'Gagal',1);o.close();toast('Tersimpan');S.D[s.id]={};loadServers().then(function(){rSrv(true)})},function(e){busy(b,0);toast(e.message,1)})}}
+
+/* ---------- ALAT ---------- */
+function rTool(){RTOOL0();['stGo','dnH'].forEach(function(id){var e=$('#'+id),c=e&&e.closest('.card');if(c)c.style.display='none'})}
+function RTOOL0(){
+ $('#view').innerHTML='<div class="grid g2">'
+ +'<div class="card"><h3>'+ic('bolt')+' Speedtest perangkat → Cloudflare</h3><p class="muted" style="margin:0 0 10px">Mengukur koneksi HP/PC kamu ke jaringan Cloudflare, bukan kecepatan VPS. Untuk VPS, pakai tombol Speedtest di halaman Server.</p><button class="btn p" id="stGo">Mulai tes</button><div id="stR" style="margin-top:12px"></div></div>'
+ +'<div class="card"><h3>'+ic('wifi')+' Latensi ke semua server</h3><p class="muted" style="margin:0 0 10px">Waktu respons Worker ke API tiap VPS.</p><button class="btn p" id="pnGo">Tes latensi</button><div id="pnR" style="margin-top:12px"></div></div>'
+ +'<div class="card"><h3>'+ic('link')+' Cek DNS / domain</h3><div class="row" style="flex-wrap:nowrap"><input id="dnH" placeholder="contoh: sg.domainmu.com" autocapitalize="off" spellcheck="false"><button class="btn p" id="dnGo">Cek</button></div><div id="dnR" style="margin-top:12px"></div></div>'
+ +'<div class="card"><h3>'+ic('srv')+' Domain → IP dari sisi VPS</h3><div class="row" style="flex-wrap:nowrap">'+(S.servers.length>1?'<select id="hsS" style="width:auto">'+S.servers.map(function(s){return '<option value="'+esc(s.id)+'">'+esc(s.name)+'</option>'}).join('')+'</select>':'')+'<input id="hsH" placeholder="contoh: listen.noice.id" autocapitalize="off" spellcheck="false"><button class="btn p" id="hsGo">Cek</button></div><div id="hsR" style="margin-top:12px"></div></div></div>';
+ $('#stGo').onclick=speed;
+ $('#pnGo').onclick=function(){var b=this,r=$('#pnR');if(!S.servers.length)return r.innerHTML='<div class="muted">Belum ada server.</div>';busy(b,1,'Menguji');
+  par(S.servers,function(s){return jf('/ping/'+s.id)},3).then(function(rs){busy(b,0);r.innerHTML=rs.map(function(x,i){return '<div class="row sb" style="padding:7px 0;border-top:1px solid var(--bd)"><b>'+esc(S.servers[i].name)+'</b>'+(x.ok?'<span class="badge '+(x.ms<400?'b-ok':x.ms<1200?'b-warn':'b-bad')+'">'+x.ms+' ms</span>':'<span class="badge b-bad">'+esc(x.error||'gagal')+'</span>')+'</div>'}).join('')})};
+ var dg=function(){var h=$('#dnH').value.trim();if(!h)return;var r=$('#dnR');r.innerHTML='<span class="spin"></span>';jf('/dns?host='+encodeURIComponent(h)).then(function(d){r.innerHTML=!d.ok?'<div class="note" style="color:var(--bad)">'+esc(d.error)+'</div>':(d.records.length?d.records.map(function(x){return '<div class="row sb" style="padding:6px 0;border-top:1px solid var(--bd)"><span class="mono">'+esc(x.data)+'</span><span class="badge b-n">'+esc(x.type)+' · TTL '+x.ttl+'</span></div>'}).join(''):'<div class="muted">Tidak ada record.</div>')})};
+ $('#dnGo').onclick=dg;$('#dnH').onkeydown=function(e){if(e.key==='Enter')dg()};
+ var hg=function(){var h=$('#hsH').value.trim();if(!h||!S.servers.length)return;var r=$('#hsR'),id=$('#hsS')?$('#hsS').value:S.servers[0].id;r.innerHTML='<span class="spin"></span>';vps(id,'action=host2ip&host='+encodeURIComponent(h)).then(function(d){r.innerHTML=bad(d)?'<div class="note" style="color:var(--bad)">'+esc(errMsg(d))+'</div>':'<div class="mono">'+esc(d.host)+(d.cname?' → '+esc(d.cname):'')+'</div>'+(d.ipv4||[]).concat(d.ipv6||[]).map(function(x){return '<div class="row sb" style="padding:6px 0;border-top:1px solid var(--bd)"><span class="mono">'+esc(x)+'</span><button class="btn s" data-cp="'+esc(x)+'">Salin</button></div>'}).join('')+(d.points_to_server?'<div class="badge b-ok" style="margin-top:8px">Mengarah ke VPS ini</div>':'');r.querySelectorAll('[data-cp]').forEach(function(b){b.onclick=function(){copy(b.getAttribute('data-cp'))}})},function(e){r.textContent=e.message})};
+ $('#hsGo').onclick=hg;$('#hsH').onkeydown=function(e){if(e.key==='Enter')hg()}}
+function speed(){var b=$('#stGo'),r=$('#stR');busy(b,1,'Menguji');r.innerHTML='<div class="note"><span class="spin"></span> Ping…</div>';
+ var T=function(){return performance.now()};
+ (function(){var a=[],i=0;return new Promise(function(res){(function n(){if(i++>=5)return res(a);var t=T();fetch('/speed/ping?'+Math.random(),{cache:'no-store',headers:{'x-panel':'1'}}).then(function(x){return x.text()}).then(function(){a.push(T()-t);n()}).catch(function(){a.push(999);n()})})()})})().then(function(a){
+  a.sort(function(x,y){return x-y});var ping=a[Math.floor(a.length/2)];
+  r.innerHTML='<div class="note"><span class="spin"></span> Download…</div>';var t=T();
+  return fetch('/speed/down?bytes=15000000&r='+Math.random(),{cache:'no-store'}).then(function(x){return x.arrayBuffer()}).then(function(buf){var dl=buf.byteLength*8/((T()-t)/1000)/1e6;
+   r.innerHTML='<div class="note"><span class="spin"></span> Upload…</div>';var body=new Uint8Array(6e6),t2=T();
+   return fetch('/speed/up',{method:'POST',body:body,headers:{'x-panel':'1'}}).then(function(x){return x.json()}).then(function(){var ul=body.length*8/((T()-t2)/1000)/1e6;busy(b,0);
+    r.innerHTML='<div class="grid g3" style="gap:10px">'+[['Ping',ping.toFixed(0)+' ms'],['Download',dl.toFixed(1)+' Mbps'],['Upload',ul.toFixed(1)+' Mbps']].map(function(x){return '<div class="card" style="padding:12px;text-align:center"><div class="faint" style="font-size:11.5px;font-weight:700">'+x[0]+'</div><div style="font-size:20px;font-weight:800">'+x[1]+'</div></div>'}).join('')+'</div>'})})}).catch(function(e){busy(b,0);r.innerHTML='<div class="note" style="color:var(--bad)">'+esc(e.message||'Tes gagal')+'</div>'})}
+
+/* ---------- PENGATURAN ---------- */
+var TGP=null;
+
+/* ===== Backup & restore VPS + Speedtest realtime (khusus panel VPS) ===== */
+function b64blob(b64,type){var bin=atob(b64),n=bin.length,u=new Uint8Array(n);for(var i=0;i<n;i++)u[i]=bin.charCodeAt(i);return new Blob([u],{type:type||'application/octet-stream'})}
+function saveBlob(name,blob){var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},800)}
+function bkVps(){return '<div class="card" style="grid-column:1/-1"><h3>'+ic('dl')+' Backup &amp; restore VPS</h3><p class="muted" style="margin:0 0 10px">Isi backup: akun SSH, data akun &amp; pengaturan script (<b>/etc/vpn-script</b>, termasuk kunci SlowDNS), Xray, dan OpenVPN. Restore menimpa data lalu merestart layanan; salinan pengaman disimpan di <b>/root/pre-restore</b>.</p><div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn p" id="bkVd">'+ic('dl')+' Unduh backup</button><button class="btn" id="bkVt">'+ic('bolt')+' Kirim ke Telegram</button><label class="btn" style="cursor:pointer">'+ic('plus')+' Restore dari file<input id="bkVf" type="file" accept=".gz,.tgz,application/gzip,application/x-gzip" hidden></label></div><div id="bkVr" style="margin-top:10px"></div></div><div class="card" style="grid-column:1/-1"><h3>'+ic('bolt')+' Telegram</h3><p class="muted" style="margin:0">Bot Telegram diatur dari menu VPS: <b>vpn → 14</b>. Backup otomatis harian &amp; restore lewat bot: <b>vpn → 20</b>. Login panel memakai API key VPS ini.</p></div>'}
+function bkVpsInit(){var R=$('#bkVr');if(!R)return;
+ $('#bkVd').onclick=function(){var b=this;busy(b,1,'Membuat backup');vps(LOCAL,'action=backup_file').then(function(r){busy(b,0);if(bad(r))return toast(errMsg(r),1);saveBlob(r.name,b64blob(r.data,'application/gzip'));toast('Backup diunduh ('+bytes(r.size)+')');R.innerHTML='<div class="note">'+esc(r.name)+' · '+bytes(r.size)+' · '+(r.ssh_users||0)+' akun SSH</div>'},function(e){busy(b,0);toast(e.message,1)})};
+ $('#bkVt').onclick=function(){var b=this;busy(b,1,'Mengirim');vps(LOCAL,'action=backup_now','POST',{}).then(function(r){if(bad(r)){busy(b,0);return toast(errMsg(r),1)}var n=0;(function poll(){vps(LOCAL,'action=job&name=backup').then(function(j){if(j.state==='running'&&n++<60)return setTimeout(poll,2000);busy(b,0);var x=j.result||j;toast(x.ok===false?(x.error||'Backup gagal'):'Backup terkirim ke Telegram',x.ok===false)},function(e){busy(b,0);toast(e.message,1)})})()},function(e){busy(b,0);toast(e.message,1)})};
+ $('#bkVf').onchange=function(){var f=this.files[0],inp=this;if(!f)return;
+  if(!/\.(tar\.gz|tgz)$/i.test(f.name)){inp.value='';return toast('Pilih file backup berakhiran .tar.gz',1)}
+  if(f.size>60*1048576){inp.value='';return toast('File terlalu besar (maks 60 MB)',1)}
+  ask('Restore dari "'+f.name+'"?\n\nData akun & konfigurasi di VPS akan ditimpa dan layanan direstart. Salinan pengaman dibuat di /root/pre-restore.','Restore',true).then(function(y){
+   if(!y){inp.value='';return}
+   var CH=384*1024,total=Math.max(1,Math.ceil(f.size/CH)),id='',a=new Uint8Array(8);crypto.getRandomValues(a);a.forEach(function(x){id+=('0'+x.toString(16)).slice(-2)});
+   function fail(m){inp.value='';R.innerHTML='<div class="note" style="color:var(--bad)">'+esc(m)+'</div>';toast(m,1)}
+   function up(i){R.innerHTML='<div class="note"><span class="spin"></span> Mengunggah '+Math.round(i*100/total)+'%</div>';
+    if(i>=total){R.innerHTML='<div class="note"><span class="spin"></span> Memulihkan data…</div>';
+     return vps(LOCAL,'action=backup_restore','POST',{id:id}).then(function(r){inp.value='';if(bad(r))return fail(errMsg(r));
+      R.innerHTML='<div class="note" style="color:var(--ok)">Restore selesai: '+(r.files||0)+' file dipulihkan · akun SSH baru '+(r.ssh_added||0)+', sudah ada '+(r.ssh_skipped||0)+', gagal '+(r.ssh_failed||0)+'<br>Salinan pengaman: <code>'+esc(r.safety||'')+'</code></div>';toast('Restore selesai');S.D={}},function(e){fail(e.message)})}
+    var fr=new FileReader();fr.onload=function(){var d=String(fr.result).split(',')[1]||'';
+     vps(LOCAL,'action=backup_upload','POST',{id:id,seq:i,data:d}).then(function(r){if(bad(r))return fail(errMsg(r));up(i+1)},function(e){fail(e.message)})};
+    fr.onerror=function(){fail('Gagal membaca file')};fr.readAsDataURL(f.slice(i*CH,(i+1)*CH))}
+   up(0)})};}
+function spkSvg(a,w,h,col){if(a.length<2)return '';var mx=Math.max.apply(null,a)||1,pts=a.map(function(v,i){return (i*(w/(a.length-1))).toFixed(1)+','+(h-2-(v/mx)*(h-6)).toFixed(1)}).join(' ');
+ return '<svg viewBox="0 0 '+w+' '+h+'" width="100%" height="'+h+'" preserveAspectRatio="none"><polyline fill="none" stroke="'+col+'" stroke-width="2" stroke-linejoin="round" points="'+pts+'"/></svg>'}
+function speedLive(id){
+ var o=modal('<h2>'+ic('bolt')+' Speedtest VPS <span class="faint" style="font-size:12px;font-weight:500">Ookla · realtime</span></h2><div id="spP" class="muted" style="margin:6px 0 0">Memulai…</div><div style="text-align:center;padding:14px 0 6px"><div id="spN" style="font-size:56px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums">0.0</div><div class="muted">Mbps</div></div><div style="height:8px;border-radius:99px;background:var(--bd);overflow:hidden"><div id="spB" style="height:100%;width:0;background:var(--a);transition:width .6s"></div></div><div id="spG" style="margin-top:12px;min-height:46px"></div><div id="spR" style="margin-top:10px"></div><div class="acts"><button class="btn" data-x>Tutup</button><button class="btn p hide" data-r>Ulangi</button></div>');
+ var alive=true,srv='',dl=[],ul=[],PH={start:'Mencari server terbaik…',testStart:'Menyiapkan tes…',ping:'Mengukur ping',download:'Mengukur kecepatan unduh',upload:'Mengukur kecepatan unggah',result:'Selesai'},again=o.querySelector('[data-r]');
+ o.querySelector('[data-x]').onclick=function(){alive=false;o.close()};
+ function put(ph,mbps,pr){$('#spP',o).textContent=(PH[ph]||ph)+(srv?' · '+srv:'');if(ph==='download'||ph==='upload'){$('#spN',o).textContent=Number(mbps).toFixed(1)}
+  var p=ph==='ping'?pr*.1:ph==='download'?10+pr*.45:ph==='upload'?55+pr*.45:ph==='result'?100:0;$('#spB',o).style.width=Math.min(100,Math.max(2,p))+'%'}
+ function draw(){$('#spG',o).innerHTML=spkSvg(dl,300,46,'var(--a)')+(ul.length>1?spkSvg(ul,300,46,'#22c55e'):'')}
+ function box(l,v){return '<div class="card" style="padding:10px;margin:0"><div class="muted" style="font-size:12px">'+l+'</div><b style="font-size:17px">'+v+'</b></div>'}
+ function done(j){var r=(j&&(j.result||j))||{};again.classList.remove('hide');
+  if(!r||r.ok===false||r.down===undefined){$('#spP',o).textContent='Speedtest gagal';$('#spR',o).innerHTML='<div class="note" style="color:var(--bad)">'+esc((r&&r.error)||'Tidak ada hasil. Pastikan VPS terhubung ke internet.')+'</div>';return}
+  $('#spP',o).textContent='Selesai · '+(r.server||srv||'');$('#spN',o).textContent=Number(r.down).toFixed(1);$('#spB',o).style.width='100%';
+  $('#spR',o).innerHTML='<div class="grid g2" style="gap:8px">'+box('Unduh',Number(r.down).toFixed(1)+' Mbps')+box('Unggah',Number(r.up).toFixed(1)+' Mbps')+box('Ping',Number(r.ping).toFixed(1)+' ms')+box('Jitter',Number(r.jitter||0).toFixed(1)+' ms')+'</div>'+(r.isp?'<div class="muted" style="margin-top:8px">ISP: '+esc(r.isp)+'</div>':'')+(r.url?'<div style="margin-top:6px"><a href="'+esc(r.url)+'" target="_blank" rel="noopener">Lihat hasil di speedtest.net</a></div>':'')}
+ function poll(){if(!alive||!document.body.contains(o))return;
+  vps(id,'action=speedtest_live').then(function(l){if(!alive)return;if(l&&l.ok){if(l.server)srv=l.server;put(l.phase,l.mbps||0,l.progress||0);if(l.phase==='download'&&l.mbps)dl.push(l.mbps);if(l.phase==='upload'&&l.mbps)ul.push(l.mbps);draw()}
+   return vps(id,'action=job&name=speedtest')}).then(function(j){if(!alive||!j)return;if(j.state==='running')return setTimeout(poll,700);done(j)},function(e){if(alive){$('#spR',o).innerHTML='<div class="note" style="color:var(--bad)">'+esc(e.message)+'</div>';again.classList.remove('hide')}})}
+ function start(){dl=[];ul=[];srv='';again.classList.add('hide');$('#spR',o).innerHTML='';$('#spG',o).innerHTML='';$('#spN',o).textContent='0.0';$('#spB',o).style.width='2%';$('#spP',o).textContent=PH.start;
+  vps(id,'action=speedtest','POST',{}).then(function(r){if(bad(r)){$('#spP',o).textContent='Gagal memulai';$('#spR',o).innerHTML='<div class="note" style="color:var(--bad)">'+esc(errMsg(r))+'</div>';again.classList.remove('hide');return}setTimeout(poll,900)},function(e){toast(e.message,1)})}
+ again.onclick=start;start()}
+function rSet(){RSET0();['tgB','bkB','pf','rv'].forEach(function(id){var e=$('#'+id),c=e&&e.closest('.card');if(c)c.style.display='none'});var g=document.querySelector('#view .grid');if(g)g.insertAdjacentHTML('beforeend',bkVps());bkVpsInit()}
+function RSET0(){
+ $('#view').innerHTML='<div class="grid g2"><div class="card"><h3>'+ic('theme')+' Tampilan</h3><div class="chips" id="thc">'+THEMES.map(function(t){return '<button class="chip'+(getTheme()===t[0]?' on':'')+'" data-t="'+t[0]+'">'+t[1]+'</button>'}).join('')+'</div><label class="row" style="gap:8px;margin-top:14px;font-weight:600;cursor:pointer"><input type="checkbox" id="pf2" style="width:17px;min-height:17px;accent-color:var(--a)" '+(getPerf()?'checked':'')+'> Mode ringan</label><div class="faint" style="font-size:12px;margin-top:4px">Mematikan efek blur dan animasi. Panel lebih cepat dan hemat baterai, terutama di HP lama.</div></div>'
+ +'<div class="card"><h3>'+ic('wifi')+' Notifikasi browser</h3><p class="muted" style="margin:0 0 10px">Muncul saat ada akun yang melebihi limit perangkat. Aktif selama panel terbuka di browser (cek tiap 2 menit).</p><label class="row" style="gap:8px;font-weight:600;cursor:pointer"><input type="checkbox" id="bn" style="width:17px;min-height:17px;accent-color:var(--a)"> Aktifkan notifikasi browser</label><div class="note hide" id="bnN"></div></div>'
+ +'<div class="card" style="grid-column:1/-1"><h3>'+ic('bolt')+' Bot Telegram <span class="r" id="tgS"></span></h3><div id="tgB"><span class="spin"></span></div></div>'
+ +'<div class="card" style="grid-column:1/-1"><h3>'+ic('dl')+' Backup &amp; restore <span class="r">daftar server + pengaturan notifikasi</span></h3><div id="bkB"><span class="spin"></span></div></div>'
+ +'<div class="card"><h3>'+ic('shield')+' Ganti password admin</h3><form id="pf"><label class="l" style="margin-top:0">Password sekarang</label><input id="po" type="password" autocomplete="current-password" required><label class="l">Password baru (min 8 karakter)</label><input id="pn" type="password" autocomplete="new-password" minlength="8" required><label class="l">Ulangi password baru</label><input id="pn2" type="password" autocomplete="new-password" required><button class="btn p" style="margin-top:14px" type="submit">Simpan password</button></form></div>'
+ +'<div class="card"><h3>'+ic('out')+' Sesi login</h3><p class="muted" style="margin:0 0 10px">Keluarkan semua perangkat yang sedang login (termasuk perangkat ini).</p><button class="btn d" id="rv">Keluar dari semua perangkat</button><div class="note">Jika lupa password setelah diganti dari panel: hapus kunci <b>cfg</b> di KV <b>PANEL</b> (Cloudflare), maka password kembali ke <b>ADMIN_PASSWORD</b>.</div></div></div>';
+ $('#pf2').onchange=function(){setPerf(this.checked);toast(this.checked?'Mode ringan aktif':'Mode ringan mati')};
+ $('#thc').onclick=function(e){var b=e.target.closest('[data-t]');if(!b)return;setTheme(b.getAttribute('data-t'));[].forEach.call(this.children,function(c){c.classList.toggle('on',c===b)})};
+ $('#pf').onsubmit=function(e){e.preventDefault();var n=$('#pn').value;if(n!==$('#pn2').value)return toast('Password baru tidak sama',1);var b=this.querySelector('button');busy(b,1,'Menyimpan');
+  jf('/auth/password',{method:'POST',body:{old:$('#po').value,new:n}}).then(function(r){busy(b,0);if(!r.ok)return toast(r.error||'Gagal',1);toast('Password diganti');$('#pf').reset()},function(e){busy(b,0);toast(e.message,1)})};
+ $('#rv').onclick=function(){ask('Keluar dari semua perangkat?','Keluar',true).then(function(y){if(y)jf('/auth/revoke',{method:'POST',body:{}}).then(function(){showLogin()})})};
+ bnInit();tgLoad()}
+function tgLoad(){if(S.page!=='set')return;jf('/tg/status').then(function(d){TGP=d;if(S.page==='set'){tgDraw();bkDraw()}})}
+function tgDraw(){var d=TGP,b=$('#tgB');if(!b)return;var st=$('#tgS');
+ var nt=[['down','Server mati / pulih'],['multi','Multi-login (melebihi limit)'],['ssl','SSL hampir habis (≤7 hari)'],['disk','Disk hampir penuh (≥90%)'],['svc','Layanan inti mati']];
+ if(!d.connected){st.innerHTML='<span class="badge b-n">belum terhubung</span>';
+  b.innerHTML='<p class="muted" style="margin:0 0 10px">Buat bot lewat <b>@BotFather</b> di Telegram, salin token-nya, lalu tempel di sini. Bot dipakai untuk notifikasi, backup, restore, dan perintah cepat (/status, /online, /trial, /backup).</p><div class="row" style="flex-wrap:nowrap"><input id="tgT" placeholder="123456789:AAxxxxxxxx…" autocomplete="off" autocapitalize="off" spellcheck="false" type="password"><button class="btn p" id="tgC">Hubungkan</button></div><div class="note">Token disimpan terenkripsi di Worker dan tidak pernah ditampilkan lagi.</div>';
+  $('#tgC').onclick=function(){var x=this;busy(x,1,'Menghubungkan');jf('/tg/connect',{method:'POST',body:{token:$('#tgT').value}}).then(function(r){busy(x,0);if(!r.ok)return toast(r.error||'Gagal',1);toast('Bot terhubung, lanjut pairing');tgLoad()},function(e){busy(x,0);toast(e.message,1)})};return}
+ if(!d.paired){st.innerHTML='<span class="badge b-warn">menunggu pairing</span>';
+  var left=d.pair?Math.max(0,Math.round((d.pair.exp-Date.now())/60000)):0;
+  b.innerHTML='<p class="muted" style="margin:0 0 8px">Bot <b>@'+esc(d.bot)+'</b> sudah terpasang. Buka Telegram, cari bot itu, lalu kirim pesan ini:</p>'+(d.pair?'<div class="lk"><code style="font-size:15px">/start '+esc(d.pair.code)+'</code><button class="btn s" id="tgCp">'+ic('copy')+'</button></div><div class="faint" style="margin-top:6px;font-size:12px">Berlaku ± '+left+' menit. Halaman ini otomatis berubah saat terhubung.</div>':'<div class="note">Kode kedaluwarsa.</div>')+'<div class="row" style="margin-top:12px"><button class="btn" id="tgN">Kode baru</button><button class="btn d" id="tgD">Batal</button></div>';
+  var cp=$('#tgCp');if(cp)cp.onclick=function(){copy('/start '+d.pair.code)};
+  $('#tgN').onclick=function(){jf('/tg/pair',{method:'POST',body:{}}).then(function(){tgLoad()})};
+  $('#tgD').onclick=tgOff;
+  setTimeout(function(){if(S.page==='set'&&TGP&&TGP.connected&&!TGP.paired)tgLoad()},3000);return}
+ st.innerHTML='<span class="badge b-ok">@'+esc(d.bot)+' · chat '+esc(d.chat)+'</span>';
+ b.innerHTML='<div class="grid g2" style="gap:18px"><div><div class="sec" style="margin-top:0">Kirim notifikasi untuk</div>'+nt.map(function(n){return '<label class="row" style="gap:8px;padding:6px 0;cursor:pointer"><input type="checkbox" data-n="'+n[0]+'" style="width:17px;min-height:17px;accent-color:var(--a)" '+(d.notify[n[0]]?'checked':'')+'> '+n[1]+'</label>'}).join('')+'<div class="faint" style="font-size:12px;margin-top:6px">Pengecekan jalan tiap 5 menit lewat <b>Cron Trigger</b> Worker (lihat panduan di bawah).</div></div>'
+  +'<div><div class="sec" style="margin-top:0">Perintah bot</div><div class="mono" style="line-height:1.9">/status<br>/online<br>/servers<br>/trial 3 vless SG<br>/backup<br>/restore (kirim file + caption)</div></div></div>'
+  +'<div class="row" style="margin-top:14px"><button class="btn" id="tgTe">Kirim pesan tes</button><button class="btn d" id="tgD">Putuskan bot</button></div>'
+  +'<div class="note"><b>Pasang Cron Trigger (sekali saja):</b> Cloudflare → Worker <b>cocote-panel</b> → Settings → Trigger Events → Add → Cron Triggers → isi <span class="mono">*/5 * * * *</span> → Add. Tanpa ini notifikasi otomatis dan backup harian tidak jalan (perintah bot tetap jalan).</div>';
+ b.querySelectorAll('[data-n]').forEach(function(c){c.onchange=function(){var nn={};nn[c.getAttribute('data-n')]=c.checked;jf('/tg/config',{method:'POST',body:{notify:nn}}).then(function(r){toast(r.ok?'Tersimpan':(r.error||'Gagal'),!r.ok);d.notify[c.getAttribute('data-n')]=c.checked})}});
+ $('#tgTe').onclick=function(){var x=this;busy(x,1);jf('/tg/test',{method:'POST',body:{}}).then(function(r){busy(x,0);toast(r.ok?'Pesan tes terkirim':(r.error||'Gagal'),!r.ok)})};
+ $('#tgD').onclick=tgOff}
+function tgOff(){ask('Putuskan bot Telegram? Webhook dihapus dan token dihapus dari Worker.','Putuskan',true).then(function(y){if(y)jf('/tg/disconnect',{method:'POST',body:{}}).then(function(){toast('Bot diputus');tgLoad()})})}
+function bkDraw(){var d=TGP,b=$('#bkB');if(!b)return;var hrs='';for(var i=0;i<24;i++)hrs+='<option value="'+i+'"'+(d.hour===i?' selected':'')+'>'+('0'+i).slice(-2)+':00 WIB</option>';
+ b.innerHTML='<div class="grid g2" style="gap:18px"><div><label class="l" style="margin-top:0">Kata sandi backup '+(d.hasPass?'<span class="badge b-ok">sudah diatur</span>':'<span class="badge b-warn">belum diatur</span>')+'</label><div class="row" style="flex-wrap:nowrap"><input id="bkP" type="password" autocomplete="new-password" placeholder="min 6 karakter" autocapitalize="off"><button class="btn" id="bkPs">Simpan</button></div><div class="faint" style="font-size:12px;margin-top:6px">File backup dienkripsi dengan kata sandi ini (API key server ikut di dalamnya). Catat kata sandinya — tanpa itu file tidak bisa dibuka.</div>'
+  +'<label class="row" style="gap:8px;margin-top:14px;cursor:pointer"><input type="checkbox" id="bkD" style="width:17px;min-height:17px;accent-color:var(--a)" '+(d.daily?'checked':'')+(d.paired?'':' disabled')+'> Kirim backup otomatis tiap hari ke Telegram</label><select id="bkH" style="margin-top:8px" '+(d.paired?'':'disabled')+'>'+hrs+'</select></div>'
+  +'<div><div class="sec" style="margin-top:0">Backup sekarang</div><div class="row"><button class="btn p" id="bkS"'+(d.paired?'':' disabled')+'>'+ic('bolt')+' Kirim ke Telegram</button><button class="btn" id="bkDl">'+ic('dl')+' Unduh file</button></div>'
+  +'<div class="sec">Restore</div><input type="file" id="bkF" accept=".json,application/json"><input id="bkRp" type="password" placeholder="Kata sandi backup (kosong = pakai yang tersimpan)" style="margin-top:8px" autocomplete="off"><select id="bkM" style="margin-top:8px"><option value="merge">Gabung (tambah &amp; perbarui, aman)</option><option value="replace">Ganti semua server</option></select><button class="btn" id="bkR" style="margin-top:8px">Restore dari file</button>'
+  +'<div class="faint" style="font-size:12px;margin-top:8px">Via Telegram: kirim file backup ke bot sebagai dokumen dengan caption <span class="mono">/restore KATASANDI</span>.</div></div></div>';
+ $('#bkPs').onclick=function(){var v=$('#bkP').value;if(v.length<6)return toast('Minimal 6 karakter',1);jf('/tg/config',{method:'POST',body:{bpass:v}}).then(function(r){toast(r.ok?'Kata sandi disimpan':(r.error||'Gagal'),!r.ok);if(r.ok)tgLoad()})};
+ $('#bkD').onchange=function(){var c=this;jf('/tg/config',{method:'POST',body:{daily:c.checked,hour:+$('#bkH').value}}).then(function(r){toast(r.ok?(c.checked?'Backup harian aktif':'Backup harian mati'):(r.error||'Gagal'),!r.ok);if(!r.ok)c.checked=false})};
+ $('#bkH').onchange=function(){jf('/tg/config',{method:'POST',body:{hour:+this.value}}).then(function(r){toast(r.ok?'Jam disimpan':(r.error||'Gagal'),!r.ok)})};
+ $('#bkS').onclick=function(){var x=this;busy(x,1,'Mengirim');jf('/backup/send',{method:'POST',body:{}}).then(function(r){busy(x,0);toast(r.ok?'Backup terkirim ke Telegram':(r.error||'Gagal'),!r.ok)})};
+ $('#bkDl').onclick=function(){var x=this;busy(x,1);fetch('/backup/download',{headers:{'x-panel':'1'}}).then(function(r){return r.text().then(function(t){busy(x,0);try{var j=JSON.parse(t);if(j.ok===false)return toast(j.error||'Gagal',1)}catch(e){}save('cocote-backup.json',t,'application/json');toast('File backup diunduh')})},function(){busy(x,0);toast('Gagal',1)})};
+ $('#bkR').onclick=function(){var f=$('#bkF').files[0];if(!f)return toast('Pilih file backup dulu',1);var mode=$('#bkM').value,x=this;
+  ask(mode==='replace'?'GANTI semua server dengan isi backup?\nServer yang tidak ada di backup akan dihapus dari panel.':'Gabungkan isi backup ke daftar server sekarang?','Restore',mode==='replace').then(function(y){if(!y)return;busy(x,1,'Memulihkan');
+   var fr=new FileReader();fr.onload=function(){jf('/backup/restore',{method:'POST',body:{file:String(fr.result),pass:$('#bkRp').value,mode:mode}}).then(function(r){busy(x,0);if(!r.ok)return toast(r.error||'Gagal',1);toast('Restore selesai: '+r.added+' ditambah, '+r.updated+' diperbarui, total '+r.total);S.D={};loadServers()},function(e){busy(x,0);toast(e.message,1)})};fr.onerror=function(){busy(x,0);toast('Gagal membaca file',1)};fr.readAsText(f)})}}
+
+/* ---------- notifikasi browser ---------- */
+var BN={t:null,seen:{},acc:{},accT:{}};
+function bnOn(){try{return localStorage.getItem('bn')==='1'}catch(e){return false}}
+function bnInit(){var c=$('#bn'),n=$('#bnN');if(!c)return;
+ var sup='Notification' in window;if(!sup){c.disabled=true;n.textContent='Browser ini tidak mendukung notifikasi.';n.classList.remove('hide');return}
+ c.checked=bnOn()&&Notification.permission==='granted';
+ c.onchange=function(){if(!c.checked){try{localStorage.setItem('bn','0')}catch(e){};bnStop();return}
+  Notification.requestPermission().then(function(p){if(p!=='granted'){c.checked=false;n.textContent='Izin notifikasi ditolak. Aktifkan lewat pengaturan situs di browser.';n.classList.remove('hide');return}
+   try{localStorage.setItem('bn','1')}catch(e){};n.classList.add('hide');bnStart();bnShow('Notifikasi aktif','Panel akan memberi tahu jika ada akun melebihi limit.')})}}
+function bnShow(title,body){var o={body:body,icon:undefined,tag:title};
+ if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration){navigator.serviceWorker.getRegistration().then(function(r){if(r&&r.showNotification)r.showNotification(title,o);else{try{new Notification(title,o)}catch(e){}}}).catch(function(){try{new Notification(title,o)}catch(e){}})}
+ else{try{new Notification(title,o)}catch(e){}}}
+function bnStop(){clearInterval(BN.t);BN.t=null}
+function bnStart(){bnStop();if(!bnOn()||!('Notification' in window)||Notification.permission!=='granted')return;
+ if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(function(){});
+ BN.t=setInterval(bnPoll,120000);setTimeout(bnPoll,4000)}
+function bnPoll(){if(document.hidden||document.getElementById('app').classList.contains('hide')||!S.servers.length)return;
+ par(S.servers,function(s){return vps(s.id,'action=online').then(function(o){if(bad(o))return o;
+  var xr=(o.xray||[]).filter(function(x){return x.source!=='traffic'&&x.devices>=2}),need=xr.length&&(!BN.acc[s.id]||Date.now()-(BN.accT[s.id]||0)>600000);
+  return (need?vps(s.id,'action=accounts').then(function(a){if(!bad(a)){var m={};a.forEach(function(x){m[x.username]=x.ip_limit});BN.acc[s.id]=m;BN.accT[s.id]=Date.now()}}):Promise.resolve()).then(function(){
+   var lim=BN.acc[s.id]||{};(o.ssh||[]).forEach(function(x){if(x.limit>0&&x.devices>x.limit)bnAlert(s,x.user,x.devices,x.limit)});
+   xr.forEach(function(x){var l=lim[x.user]||0;if(l>0&&x.devices>l)bnAlert(s,x.user,x.devices,l)});return o})})},3)}
+function bnAlert(s,u,n,l){var k=s.id+':'+u,now=Date.now();if(BN.seen[k]&&now-BN.seen[k]<1800000)return;BN.seen[k]=now;bnShow('Multi-login: '+u,s.name+' · '+n+'/'+l+' perangkat')}
+/* ---------- boot ---------- */
+function loadServers(){return jf('/servers').then(function(d){S.servers=(d&&d.servers)||[];srvSelect();return S.servers})}
+
+/* ---------- palette & status ---------- */
+var UPD=Date.now();
+function markUpd(){UPD=Date.now();updTick()}
+function updTick(){var e=$('#upd');if(!e)return;var m=Math.floor((Date.now()-UPD)/60000);
+ e.querySelector('span').textContent=m<1?'Baru saja':m+' mnt lalu';e.classList.toggle('old',m>=5)}
+setInterval(updTick,30000);
+function palItems(){
+ var it=[];PAGES.forEach(function(p){it.push({g:'Navigasi',t:p[1],i:p[2],h:'Buka',f:function(){go(p[0])}})});
+ it.push({g:'Aksi',t:'Buat akun baru',i:'plus',f:function(){go('acc');setTimeout(createAcc,60)}});
+ it.push({g:'Aksi',t:'Trial cepat',i:'bolt',f:function(){trialDlg()}});
+ it.push({g:'Aksi',t:'Muat ulang data',i:'ref',f:function(){go(S.page,true)}});
+ it.push({g:'Aksi',t:'Ganti tema',i:'theme',f:function(){$('#nTheme').click()}});
+ return it}
+function openPal(){
+ if(document.querySelector('.pal'))return;
+ var base=palItems(),acc=allAcc(),sel=0,cur=[];
+ var o=modal('<div class="pal"><input id="pq" placeholder="Cari akun, halaman, atau aksi…" autocomplete="off" aria-label="Cari"><div class="pl" id="pl"></div><div class="pf"><span><kbd>↑↓</kbd> pilih</span><span><kbd>Enter</kbd> buka</span><span><kbd>Esc</kbd> tutup</span></div></div>');
+ var m=o.querySelector('.modal');m.style.padding='0';m.style.maxWidth='none';m.style.width='auto';m.style.alignSelf='flex-start';m.style.marginTop='12vh';
+ var q=o.querySelector('#pq'),pl=o.querySelector('#pl');
+ function draw(){var t=q.value.trim().toLowerCase();cur=[];
+  base.forEach(function(x){if(!t||x.t.toLowerCase().indexOf(t)>-1)cur.push(x)});
+  if(t){var n=0;for(var k=0;k<acc.length&&n<8;k++){var a=acc[k];if(a.username.toLowerCase().indexOf(t)>-1){n++;(function(a){cur.push({g:'Akun',t:a.username,i:'user',h:a.sname+' · '+a.proto,f:function(){showLink(a)}})})(a)}}}
+  if(sel>=cur.length)sel=Math.max(0,cur.length-1);
+  var h='',g='';cur.forEach(function(x,i){if(x.g!==g){g=x.g;h+='<div class="pg">'+g+'</div>'}
+   h+='<button class="pr'+(i===sel?' on':'')+'" data-i="'+i+'">'+ic(x.i)+'<span>'+esc(x.t)+'</span><small>'+esc(x.h||'')+'</small></button>'});
+  pl.innerHTML=h||'<div class="pe">Tidak ada hasil</div>';
+  var on=pl.querySelector('.on');if(on&&on.scrollIntoView)on.scrollIntoView({block:'nearest'})}
+ function run(i){var x=cur[i];if(!x)return;close();setTimeout(x.f,30)}
+ function close(){var b=o.querySelector('.modal');if(o.parentNode)o.parentNode.removeChild(o)}
+ q.oninput=function(){sel=0;draw()};
+ q.onkeydown=function(e){if(e.key==='ArrowDown'){sel=Math.min(cur.length-1,sel+1);draw();e.preventDefault()}
+  else if(e.key==='ArrowUp'){sel=Math.max(0,sel-1);draw();e.preventDefault()}
+  else if(e.key==='Enter'){run(sel);e.preventDefault()}else if(e.key==='Escape')close()};
+ pl.onclick=function(e){var b=e.target.closest('.pr');if(b)run(+b.dataset.i)};
+ draw();setTimeout(function(){q.focus()},30)}
+document.addEventListener('keydown',function(e){
+ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){if($('#app')&&!$('#app').classList.contains('hide')){e.preventDefault();openPal()}}
+ else if(e.key==='/'&&!/INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName||'')&&!document.querySelector('.ov')){e.preventDefault();openPal()}});
+function boot(){showApp();mobile();setTheme(getTheme());var bp=$('#bPal');if(bp){bp.querySelector('.pi').innerHTML=ic('search');bp.onclick=openPal}markUpd();bnStart();
+ return loadServers().then(function(){buildNav();go(S.page==='dash'?'dash':S.page)}).catch(function(){})}
+jf('/auth/me').then(function(d){if(d.ok)boot();else showLogin()},function(){showLogin()});
+</script>
+</body>
+</html>
