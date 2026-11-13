@@ -239,7 +239,7 @@ if [[ "${1:-}" == "--inner" ]]; then
   shift
 else
   case "${1:-}" in
-    create_account|delete_account|renew_account|edit_limits|kick|kick_xray|toggle_service|torrent|f2b_unban|tg_set)
+    create_account|delete_account|renew_account|edit_limits|kick|toggle_service|torrent|f2b_unban|tg_set|cleanup)
       out=$("$0" --inner "$@"); rc=$?
       a="$1"; ok=$(jq -r '.ok // false' <<< "$out" 2>/dev/null); [[ "$ok" == "true" ]] || ok=false
       case "$a" in
@@ -248,11 +248,11 @@ else
         renew_account)  lbl="Perpanjang akun";  tgt="${3:-} (${2:-})"; det="+${4:-30} hari" ;;
         edit_limits)    lbl="Edit limit akun";  tgt="${3:-} (${2:-})"; det="limit IP ${4:-}, kuota ${5:-} GB" ;;
         kick)           lbl="Putuskan sesi";    tgt="${2:-}"; det="" ;;
-        kick_xray)      lbl="Kick akun Xray";   tgt="${2:-}"; det="${3:-60} detik" ;;
         toggle_service) lbl="Layanan ${3:-}";   tgt="${2:-}"; det="" ;;
         torrent)        lbl="Blokir torrent";   tgt="${2:-}"; det="" ;;
         f2b_unban)      lbl="Buka blokir IP";   tgt="${2:-}"; det="" ;;
         tg_set)         lbl="Ubah pengaturan Telegram"; tgt="bot"; det="" ;;
+        cleanup)        lbl="Bersihkan ${2:-}"; tgt="VPS"; det="" ;;
       esac
       [[ "$ok" == "false" ]] && det="$(jq -r '.error // empty' <<< "$out" 2>/dev/null | cut -c1-120)"
       act_log "$lbl" "$tgt" "$ok" "$det"
@@ -636,17 +636,6 @@ File .ovpn   : lihat tombol download di bawah (link berlaku 60 menit)"
     jq -n --arg m "$msg" --argjson ok "$([[ $rc -eq 0 ]] && echo true || echo false)" '{ok:$ok, message:$m, error:(if $ok then null else $m end)}'
     ;;
 
-  kick_xray)
-    username="${2:-}"; sec="${3:-60}"
-    valid_user "$username" || json_err "username tidak valid"
-    [[ "$sec" =~ ^[0-9]+$ ]] || sec=60
-    [[ -f "$SCRIPT_DIR/menu/tools.sh" ]] || json_err "menu/tools.sh tidak ada, update script VPN dulu"
-    grep -q 'kick-xray' "$SCRIPT_DIR/menu/tools.sh" || json_err "script VPN belum mendukung kick Xray, update script VPN (menu/tools.sh) dulu"
-    raw=$(timeout 30 bash "$SCRIPT_DIR/menu/tools.sh" kick-xray "$username" "$sec" -y 2>&1); rc=$?
-    msg=$(strip_ansi <<< "$raw" | sed 's/^ *//' | paste -sd' ' -)
-    jq -n --arg m "$msg" --argjson ok "$([[ $rc -eq 0 ]] && echo true || echo false)" '{ok:$ok, message:$m, error:(if $ok then null else $m end)}'
-    ;;
-
   security_status)
     f2b_inst=false; f2b_act=false; banned='[]'
     if command -v fail2ban-client >/dev/null 2>&1; then
@@ -689,6 +678,31 @@ File .ovpn   : lihat tombol download di bawah (link berlaku 60 menit)"
     raw=$(timeout 30 bash "$SCRIPT_DIR/menu/security.sh" f2b-unban "$ip" -y 2>&1); rc=$?
     msg=$(strip_ansi <<< "$raw" | sed 's/^ *//' | paste -sd' ' -)
     jq -n --arg m "$msg" --argjson ok "$([[ $rc -eq 0 ]] && echo true || echo false)" '{ok:$ok, message:$m, error:(if $ok then null else $m end)}'
+    ;;
+
+  cleanup)
+    what="${2:-}"
+    [[ "$what" == "cache" || "$what" == "log" || "$what" == "all" ]] || json_err "jenis harus cache, log, atau all"
+    used_ram() { free -m | awk '/^Mem:/{print $3}'; }
+    used_disk() { df -Pk / | awk 'NR==2{print $3}'; }
+    r0=$(used_ram); d0=$(used_disk); did=()
+    if [[ "$what" == "cache" || "$what" == "all" ]]; then
+      sync; echo 3 > /proc/sys/vm/drop_caches 2>/dev/null && did+=("cache RAM")
+      command -v apt-get >/dev/null 2>&1 && { apt-get clean >/dev/null 2>&1; did+=("cache apt"); }
+      rm -rf /var/lib/vpn-panel-restore 2>/dev/null
+      find /tmp -xdev -type f -atime +2 -not -name '*.sock' -delete 2>/dev/null; did+=("file temp lama")
+    fi
+    if [[ "$what" == "log" || "$what" == "all" ]]; then
+      command -v journalctl >/dev/null 2>&1 && { journalctl --rotate >/dev/null 2>&1; journalctl --vacuum-size=16M >/dev/null 2>&1; did+=("journal"); }
+      find /var/log -xdev -type f \( -name '*.gz' -o -name '*.[0-9]' -o -name '*.old' \) -delete 2>/dev/null
+      find /var/log -xdev -type f -name '*.log' -not -name 'vpn-panel-history.jsonl' -exec truncate -s 0 {} + 2>/dev/null
+      for f in /var/log/btmp /var/log/wtmp /var/log/lastlog; do [[ -f "$f" ]] && : > "$f" 2>/dev/null; done
+      : > "$ACT_LOG" 2>/dev/null
+      did+=("log sistem")
+    fi
+    r1=$(used_ram); d1=$(used_disk)
+    jq -n --arg w "$what" --arg did "$(IFS=,; echo "${did[*]}")" --argjson r0 "${r0:-0}" --argjson r1 "${r1:-0}" --argjson d0 "${d0:-0}" --argjson d1 "${d1:-0}" \
+      '{ok:true, what:$w, done:$did, ram_freed_mb:($r0-$r1), disk_freed_mb:((($d0-$d1)/1024)|floor), ram_used_mb:$r1}'
     ;;
 
   # ── V8: aksi tambahan ──────────────────────────────────────────
@@ -852,7 +866,8 @@ m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
 path = sys.argv[2]
 try:
     count, added, skipped, failed, safety = m.do_restore(path)
-    out = {"ok": True, "files": count, "ssh_added": added, "ssh_skipped": skipped, "ssh_failed": failed, "safety": safety}
+    out = {"ok": True, "files": count, "ssh_added": added, "ssh_skipped": skipped, "ssh_failed": failed, "safety": safety,
+           "file_errors": m.RESTORE_ERRORS[:5], "file_error_count": len(m.RESTORE_ERRORS)}
 except Exception as e:
     out = {"ok": False, "error": "Restore gagal: %s" % e}
 try:
