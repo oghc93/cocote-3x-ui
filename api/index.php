@@ -144,13 +144,6 @@ switch (true) {
     echo json_encode(run_bridge(['kick', $body['username']]));
     break;
 
-  case $action === 'kick_xray' && $method === 'POST':
-    if (empty($body['username'])) fail(422, "username wajib diisi");
-    $sec = (int)($body['seconds'] ?? 60);
-    if ($sec < 5 || $sec > 86400) $sec = 60;
-    echo json_encode(run_bridge(['kick_xray', $body['username'], $sec]));
-    break;
-
   case $action === 'security' && $method === 'GET':
     echo json_encode(run_bridge(['security_status']));
     break;
@@ -209,6 +202,11 @@ switch (true) {
     $id = (string)($body['id'] ?? '');
     if (!preg_match('/^[a-f0-9]{8,32}$/', $id)) fail(422, 'parameter tidak valid');
     echo json_encode(run_bridge(['backup_restore', $id]));
+    break;
+
+  case $action === 'cleanup' && $method === 'POST':
+    if (empty($body['what']) || !in_array($body['what'], ['cache', 'log', 'all'], true)) fail(422, "what harus cache, log, atau all");
+    echo json_encode(run_bridge(['cleanup', $body['what']]));
     break;
 
   case $action === 'ssl_renew' && $method === 'POST':
