@@ -1,0 +1,30 @@
+name: Buat Zip
+on:
+  workflow_dispatch:
+    inputs:
+      zipname:
+        description: "Nama file zip"
+        default: "cocote-3x-ui.zip"
+permissions:
+  contents: write
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Buat zip (file asli tidak dihapus)
+        run: |
+          ZIP="${{ github.event.inputs.zipname }}"
+          rm -f "$ZIP"
+          zip -r "/tmp/$ZIP" . -x ".git/*" "*.zip"
+          mv "/tmp/$ZIP" "$ZIP"
+          ls -la "$ZIP"
+
+      - name: Commit dan push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add "${{ github.event.inputs.zipname }}"
+          git commit -m "Buat ${{ github.event.inputs.zipname }}" || echo "tidak ada perubahan"
+          git push
